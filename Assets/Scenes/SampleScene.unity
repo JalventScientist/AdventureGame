@@ -725,14 +725,18 @@ MonoBehaviour:
   wallRunForce: 300
   wallJumpUpForce: 10
   wallJumpSideForce: 20
-  maxWallRunTime: 1e+30
+  maxWallRunTime: 0.7
   wallClimbSpeed: 3
+  exitWallTime: 0.2
   wallJumpKey: 32
   upwardsRunKey: 304
   downwardsRunKey: 306
   wallCheckDistance: 0.7
   minJumpHeight: 2
   orientation: {fileID: 1367449047}
+  cam: {fileID: 1593117473}
+  ActualCam: {fileID: 1593117475}
+  DefaultFov: 60
 --- !u!43 &137900091
 Mesh:
   m_ObjectHideFlags: 0
@@ -6591,6 +6595,7 @@ MonoBehaviour:
   sensX: 400
   sensY: 400
   orientation: {fileID: 1367449047}
+  camHolder: {fileID: 2124425998}
 --- !u!81 &1593117474
 AudioListener:
   m_ObjectHideFlags: 0

@@ -13,6 +13,9 @@ public class WallRunning : MonoBehaviour
     public float maxWallRunTime;
     public float wallClimbSpeed;
     private float wallRunTimer;
+    private float exitwallTimer;
+    public float exitWallTime;
+    private bool exitingWall;
 
     [Header("Input")]
     public KeyCode wallJumpKey = KeyCode.Space;
@@ -31,10 +34,16 @@ public class WallRunning : MonoBehaviour
     private bool wallLeft;
     private bool wallRight;
 
+    [Header("Gravity")]
+
     [Header("References")]
     public Transform orientation;
+    public PlayerCam cam;
+    public Camera ActualCam;
     private PlayerMovement pm;
     private Rigidbody rb;
+
+    public float DefaultFov;
 
     private void Start()
     {
@@ -73,14 +82,33 @@ public class WallRunning : MonoBehaviour
         upwardsrunning = Input.GetKey(upwardsRunKey);
         downwardsrunning = Input.GetKey(downwardsRunKey);
 
-        if((wallLeft || wallRight) && vertInput >0 && AboveGround())
+        if((wallLeft || wallRight) && vertInput >0 && AboveGround() && !exitingWall)
         {
             if (!pm.wallrunning)
             {
                 StartWallRun();
             }
+            if (wallRunTimer > 0)
+                wallRunTimer -= Time.deltaTime;
+            if(wallRunTimer <= 0 && pm.wallrunning)
+            {
+                exitingWall = true;
+                exitwallTimer = exitWallTime;
+            }
             if (Input.GetKeyDown(wallJumpKey)) WallJump();
         }
+
+        else if (exitingWall)
+        {
+            if (pm.wallrunning)
+                StopWallRun();
+
+            if (exitwallTimer > 0)
+                exitwallTimer -= Time.deltaTime;
+            if (exitWallTime <= 0)
+                exitingWall = false;
+        }
+
         else
         {
             if (pm.wallrunning)
@@ -91,6 +119,12 @@ public class WallRunning : MonoBehaviour
     private void StartWallRun()
     {
         pm.wallrunning = true;
+        wallRunTimer = maxWallRunTime;
+
+        //apply cam fx
+        cam.DoFov(DefaultFov * 1.1f);
+        if (wallLeft) cam.DoTilt(-5f);
+        if (wallRight) cam.DoTilt(5f);
     }
     private void WallRunningMovement()
     {
@@ -118,10 +152,16 @@ public class WallRunning : MonoBehaviour
     private void StopWallRun()
     {
         pm.wallrunning = false;
+
+        cam.DoFov(DefaultFov);
+        cam.DoTilt(0f);
     }
 
     private void WallJump()
     {
+
+        exitingWall = true;
+        exitwallTimer = exitWallTime;
         Vector3 wallNormal = wallRight ? rightWallhit.normal : leftWallhit.normal;
         Vector3 forceToApply = transform.up * wallJumpUpForce + wallNormal * wallJumpSideForce;
 
