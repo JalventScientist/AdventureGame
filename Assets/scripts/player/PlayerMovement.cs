@@ -10,6 +10,7 @@ public class PlayerMovement : MonoBehaviour
     public float groundDrag;
     public float sprintspeed;
     public float slideSpeed;
+    public float WallRunSpeed;
     public ForceMode forceMode;
 
     private float desiredMoveSpeed;
@@ -61,10 +62,13 @@ public class PlayerMovement : MonoBehaviour
         sprinting,
         crouching,
         sliding,
+        wallrunning,
         air
     }
 
     public bool sliding;
+    public bool crouching; //idfk just incase sliding wont do
+    public bool wallrunning;
 
     private void Start()
     {
@@ -117,7 +121,12 @@ public class PlayerMovement : MonoBehaviour
 
     private void StateHandler()
     {
-        if (sliding)
+        if (wallrunning)
+        {
+            state = MovementState.wallrunning;
+            desiredMoveSpeed = WallRunSpeed;
+        }
+        else if (sliding)
         {
             state = MovementState.sliding; 
 
