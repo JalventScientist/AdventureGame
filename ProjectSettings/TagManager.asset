@@ -11,9 +11,9 @@ TagManager:
   - Ground
   - Water
   - UI
-  - 
-  - 
-  - 
+  - gun
+  - post-process
+  - emissive
   - 
   - 
   - 

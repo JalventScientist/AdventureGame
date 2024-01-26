@@ -65,7 +65,6 @@ public class PlayerMovement : MonoBehaviour
         wallrunning,
         air
     }
-
     public bool sliding;
     public bool crouching; //idfk just incase sliding wont do
     public bool wallrunning;
@@ -84,6 +83,7 @@ public class PlayerMovement : MonoBehaviour
         grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.2f, whatIsGround);
         MyInput();
         SpeedControl();
+        StateHandler();
         if (grounded)
         {
             rb.drag = groundDrag;
@@ -118,7 +118,6 @@ public class PlayerMovement : MonoBehaviour
             transform.localScale = new Vector3(transform.localScale.x, startYScale, transform.localScale.z);
         }
     }
-
     private void StateHandler()
     {
         if (wallrunning)
@@ -154,14 +153,15 @@ public class PlayerMovement : MonoBehaviour
             state = MovementState.air;
             desiredMoveSpeed = moveSpeed;
         }
-        if (Mathf.Abs(desiredMoveSpeed - lastDesiredMoveSpeed) > 4f && moveSpeed != 0)
+
+        if(Mathf.Abs(desiredMoveSpeed - lastDesiredMoveSpeed) > 4f && moveSpeed != 0)
         {
-            StopAllCoroutines();
-            StartCoroutine(SmoothlyLerpMoveSpeed());
+           
+                StopAllCoroutines();
+                StartCoroutine(SmoothlyLerpMoveSpeed());
         }
         lastDesiredMoveSpeed = desiredMoveSpeed;
     }
-
     private IEnumerator SmoothlyLerpMoveSpeed()
     {
         float time = 0;
