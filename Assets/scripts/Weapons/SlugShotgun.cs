@@ -6,12 +6,14 @@ using UnityEngine;
 public class SlugShotgun : MonoBehaviour
 {
     [Header("GunStats")]
-    private float ReloadTime = 0.958f;
+    public float ReloadTime = 0.958f;
     private float ReloadTimer;
-    private bool CanFire;
-    public float Damage;
+    public bool CanFire;
     public Transform Transform;
     public Transform ShotGun;
+    public AudioSource Sound;
+    public AudioClip[] ClipSources;
+    private int AudioVariant; //loops between 3 numbers
 
     [Header("Requirements")]
     public Animator Animator;
@@ -21,6 +23,7 @@ public class SlugShotgun : MonoBehaviour
     private void Start()
     {
         Animator = gameObject.GetComponent<Animator>();
+        Sound = gameObject.GetComponent<AudioSource>();
     }
     private void Update()
     {
@@ -46,7 +49,6 @@ public class SlugShotgun : MonoBehaviour
         }
         else
         {
-            Debug.Log("Waiting Until Fire");
             yield return null;
         }
     }
@@ -67,10 +69,9 @@ public class SlugShotgun : MonoBehaviour
     }
     private void Fire()
     {
-        for(int i = 0; i < 10; i++)
-        {
-
-        }
+        Sound.clip = ClipSources[Random.Range(0, 2)];
+        Sound.PlayOneShot(Sound.clip);
+        
         CameraShaker.Instance.ShakeOnce(4, 4, 0, 1);
         Animator.Play("Fire");
         ReloadTimer = ReloadTime;
