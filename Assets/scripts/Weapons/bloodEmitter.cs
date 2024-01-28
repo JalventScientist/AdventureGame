@@ -10,10 +10,14 @@ public class bloodEmitter : MonoBehaviour
     private bool TimerEnabled = false;
     public GameObject Blood;
     public ParticleSystem BloodParticles;
+    public AudioClip[] BloodSound;
+    public GameObject BloodSounds;
+    private AudioSource SoundSource;
 
     private void Start()
     {
         BloodParticles = GetComponent<ParticleSystem>();
+        SoundSource = BloodSounds.GetComponent<AudioSource>();
     }
 
     public void AttachToObject(Vector3 Position)
@@ -21,6 +25,8 @@ public class bloodEmitter : MonoBehaviour
         Blood.transform.position = Position;
         ExistTimer = ExistLength;
         TimerEnabled = true;
+        BloodSounds.GetComponent<AudioSource>().clip = BloodSound[Random.Range(0, 3)];
+        BloodSounds.GetComponent<AudioSource>().Play();
     }
     private void FixedUpdate()
     {

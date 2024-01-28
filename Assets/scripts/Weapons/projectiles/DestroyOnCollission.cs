@@ -28,13 +28,23 @@ public class DestroyOnCollission : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
+       IfuckingHitShit(collision);
+    }
+    private void OnCollisionStay(Collision collision)
+    {
+        IfuckingHitShit(collision);
+    }
+
+    private void IfuckingHitShit(Collision collision)
+    {
         if (collision.collider.gameObject.layer == LayerMask.NameToLayer("Enemy"))
         {
             GameObject THEBLOOD = Instantiate(Blood);
             THEBLOOD.GetComponent<bloodEmitter>().AttachToObject(collision.transform.position);
             collision.gameObject.GetComponent<EnemyHealth>().health -= Damage;
             Object.Destroy(this.gameObject);
-        } else
+        }
+        else
         {
 
             rb.constraints = RigidbodyConstraints.FreezeAll;
@@ -43,7 +53,7 @@ public class DestroyOnCollission : MonoBehaviour
             UseExpireTimer = false;
             Sparks.Emit(emitParams, 5);
         }
-        
+
     }
     private void FixedUpdate()
     {

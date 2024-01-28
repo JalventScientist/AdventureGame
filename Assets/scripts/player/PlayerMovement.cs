@@ -7,6 +7,7 @@ public class PlayerMovement : MonoBehaviour
 {
     [Header("Movement")]
     public float moveSpeed;
+    public float walkSpeed;
     public float groundDrag;
     public float sprintspeed;
     public float slideSpeed;
@@ -15,6 +16,9 @@ public class PlayerMovement : MonoBehaviour
 
     private float desiredMoveSpeed;
     private float lastDesiredMoveSpeed;
+
+    public float stamina;
+    private float staminaLeft;
 
     [Header("Jumping")]
     public float jumpForce;
