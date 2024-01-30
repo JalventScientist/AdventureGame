@@ -40,6 +40,7 @@ public class PlayerMovement : MonoBehaviour
     public float playerHeight;
     public LayerMask whatIsGround;
     bool grounded;
+    public bool IswalkingOnGround;
 
     [Header("Slope Handling")]
     public float maxSlopeAngle;
@@ -100,6 +101,20 @@ public class PlayerMovement : MonoBehaviour
     private void FixedUpdate()
     {
         MovePlayer();
+         if(hozInput != 0 || vertInput != 0)
+        {
+            if(grounded)
+            {
+                IswalkingOnGround = true;
+            } else
+            {
+                IswalkingOnGround = false;
+            }
+        } else
+        {
+            IswalkingOnGround = false;
+        }
+
     }
     private void MyInput()
     {

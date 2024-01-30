@@ -9,10 +9,12 @@ public class SlugShotgun : MonoBehaviour
     public float ReloadTime = 0.958f;
     private float ReloadTimer;
     public bool CanFire;
+    private bool firing;
     public Transform Transform;
     public Transform ShotGun;
     public AudioSource Sound;
     public AudioClip[] ClipSources;
+    public shotgunProjectile bullets;
     private int AudioVariant; //loops between 3 numbers
 
     [Header("Requirements")]
@@ -31,25 +33,13 @@ public class SlugShotgun : MonoBehaviour
         {
             if (Input.GetMouseButtonDown(0))
             {
-                StartCoroutine(LoopFire());
-
+                firing = true;
             }
             else if (Input.GetMouseButtonUp(0))
             {
-                 StopCoroutine(LoopFire());
+                firing = false;
             }
 
-        }
-    }
-
-    IEnumerator LoopFire()
-    {
-        if (CanFire) {
-            Fire();
-        }
-        else
-        {
-            yield return null;
         }
     }
     private void FixedUpdate()
@@ -57,10 +47,18 @@ public class SlugShotgun : MonoBehaviour
 
         ShotGun.localScale = new Vector3(50,40,50);
  
-        if (!CanFire)
+        if(firing)
+        {
+            if (CanFire)
+
+            {
+                Fire();
+            }
+        }
+        if(!CanFire)
         {
             ReloadTimer -= Time.deltaTime;
-            if(ReloadTimer <= 0)
+            if (ReloadTimer <= 0)
             {
                 Animator.Play("Idle");
                 CanFire = true;
@@ -69,12 +67,13 @@ public class SlugShotgun : MonoBehaviour
     }
     private void Fire()
     {
-        Sound.clip = ClipSources[Random.Range(0, 2)];
-        Sound.PlayOneShot(Sound.clip);
-        
-        CameraShaker.Instance.ShakeOnce(4, 4, 0, 1);
-        Animator.Play("Fire");
         ReloadTimer = ReloadTime;
         CanFire = false;
+        Sound.clip = ClipSources[Random.Range(0, 2)];
+        Sound.PlayOneShot(Sound.clip);
+        bullets.Fire();
+        CameraShaker.Instance.ShakeOnce(4, 4, 0, 1);
+        Animator.Play("Fire");
+
     }
 }

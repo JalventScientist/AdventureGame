@@ -28,10 +28,6 @@ public class DestroyOnCollission : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-       IfuckingHitShit(collision);
-    }
-    private void OnCollisionStay(Collision collision)
-    {
         IfuckingHitShit(collision);
     }
 

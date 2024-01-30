@@ -6,7 +6,7 @@ public class HeadBobber : MonoBehaviour
 {
     public float walkingBobbingSpeed;
     public float bobbingAmount;
-    public GameObject PlayerBody;
+    public PlayerMovement Plr;
     public Rigidbody rb;
 
     float defaultPosY = 0f;
@@ -20,7 +20,7 @@ public class HeadBobber : MonoBehaviour
 
     private void Update()
     {
-        if(rb.velocity.x > 0.1f || rb.velocity.x > 0.1f)
+        if(Plr.IswalkingOnGround || Plr.wallrunning)
         {
             timer += Time.deltaTime * walkingBobbingSpeed;
             transform.localPosition = new Vector3(transform.localPosition.x, defaultPosY + Mathf.Sin(timer) * bobbingAmount, transform.localPosition.z);
