@@ -14,7 +14,9 @@ public class FilthBehaviour : MonoBehaviour
     public NavMeshAgent FilthAgent;
     private GameObject Player;
     private Vector3 movementDirection;
-    private Vector3 movementPerSecond;
+    private Vector3 lastMovement;
+    private bool attacking = false;
+    private bool grounded;
     private float latestDirectionChangeTime;
 
     private void Start()
@@ -28,7 +30,23 @@ public class FilthBehaviour : MonoBehaviour
         if (BehaviourEnabled)
         {
             FilthAgent.SetDestination(Player.transform.position);
-            FilthAnimator.Play("Run");
+            
         }
+
+        if(transform.position != lastMovement)
+        {
+            FilthAnimator.Play("Run");
+        } else
+        {
+            if (!attacking)
+            {
+
+            } else
+            {
+                FilthAnimator.Play("Idle");
+            }
+        }
+
+        lastMovement = transform.position;
     }
 }
