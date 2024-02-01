@@ -33,18 +33,26 @@ public class FilthBehaviour : MonoBehaviour
             
         }
 
-        if(transform.position != lastMovement)
+        if(FilthAgent.pathStatus == NavMeshPathStatus.PathComplete)
         {
-            FilthAnimator.Play("Run");
+            if (lastMovement != transform.position)
+            {
+                FilthAnimator.Play("Run");
+            }
+            else
+            {
+                if (!attacking)
+                {
+                    FilthAnimator.Play("Idle");
+                }
+                else
+                {
+                    FilthAnimator.Play("Attack");
+                }
+            }
         } else
         {
-            if (!attacking)
-            {
-
-            } else
-            {
-                FilthAnimator.Play("Idle");
-            }
+            FilthAnimator.Play("Idle");
         }
 
         lastMovement = transform.position;
