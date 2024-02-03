@@ -17,6 +17,9 @@ public class WallRunning : MonoBehaviour
     private float exitwallTimer;
     public float exitWallTime;
     private bool exitingWall;
+    public float HowManyWalljumps = 3;
+    private float WallJumpCounter;
+    private bool ReachedMax;
 
     [Header("Input")]
     public KeyCode wallJumpKey = KeyCode.Space;
@@ -52,6 +55,7 @@ public class WallRunning : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         pm = GetComponent<PlayerMovement>();
+        ReachedMax = false;
     }
     private void Update()
     {
@@ -61,9 +65,22 @@ public class WallRunning : MonoBehaviour
 
     private void FixedUpdate()
     {
+        print(HowManyWalljumps);
         if (pm.wallrunning)
         {
             WallRunningMovement();
+        }
+        if (pm.grounded)
+        {
+            WallJumpCounter = 0;
+        }
+        if (WallJumpCounter >= HowManyWalljumps)
+        {
+            ReachedMax = true;
+        }
+        else
+        {
+            ReachedMax = false;
         }
     }
     private void CheckForWall()
@@ -89,22 +106,33 @@ public class WallRunning : MonoBehaviour
         {
             if (!pm.wallrunning)
             {
-                StartWallRun();
+                if(!ReachedMax)
+                {
+                    StartWallRun();
+                }
             }
             if (wallRunTimer > 0)
                 wallRunTimer -= Time.deltaTime;
             if(wallRunTimer <= 0 && pm.wallrunning)
             {
+                WallJumpCounter += 1;
                 ForceOffWall();
             }
-            if (Input.GetKeyDown(wallJumpKey)) WallJump();
+            if (Input.GetKeyDown(wallJumpKey) && !ReachedMax)
+            {
+                WallJumpCounter += 1;
+                WallJump();
+            }
         }
 
 
         else if (exitingWall)
         {
             if (pm.wallrunning)
+            {
+                WallJumpCounter += 1;
                 StopWallRun();
+            }
 
             if (exitwallTimer > 0)
                 exitwallTimer -= Time.deltaTime;
@@ -117,9 +145,12 @@ public class WallRunning : MonoBehaviour
         else
         {
             if (pm.wallrunning)
+            {
+                WallJumpCounter += 1;
                 StopWallRun();
+            }
+                
         }
-
     }
 
     private void StartWallRun()

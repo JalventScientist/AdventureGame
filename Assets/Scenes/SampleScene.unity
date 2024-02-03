@@ -679,6 +679,7 @@ MonoBehaviour:
   whatIsGround:
     serializedVersion: 2
     m_Bits: 8
+  grounded: 0
   IswalkingOnGround: 0
   maxSlopeAngle: 75
   inDebugMode: 0
@@ -731,6 +732,7 @@ MonoBehaviour:
   maxWallRunTime: 0.7
   wallClimbSpeed: 3
   exitWallTime: 0.2
+  HowManyWalljumps: 4
   wallJumpKey: 32
   upwardsRunKey: 304
   downwardsRunKey: 306
@@ -1565,7 +1567,7 @@ Light:
     serializedVersion: 2
     m_Bits: 4294967295
   m_RenderingLayerMask: 1
-  m_Lightmapping: 4
+  m_Lightmapping: 2
   m_LightShadowCasterMode: 0
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 1
@@ -5438,7 +5440,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: -515.2001, y: 0}
+  m_SizeDelta: {x: -593, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1114370869
 MonoBehaviour:
