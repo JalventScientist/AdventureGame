@@ -17,7 +17,7 @@ public class WallRunning : MonoBehaviour
     private float exitwallTimer;
     public float exitWallTime;
     private bool exitingWall;
-    public float HowManyWalljumps = 3;
+    public float HowManyWalljumps;
     private float WallJumpCounter;
     private bool ReachedMax;
 

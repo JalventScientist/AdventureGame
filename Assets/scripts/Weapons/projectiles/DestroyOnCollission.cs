@@ -16,11 +16,13 @@ public class DestroyOnCollission : MonoBehaviour
     public ParticleSystem Sparks;
     public GameObject Blood;
     public bloodEmitter BloodParticles;
+    private bool CanCollide;
 
     private void Start()
     {
         ExpireTimer = ExistTime;
         UseExpireTimer = true;
+        CanCollide = true;
         rb = GetComponent<Rigidbody>();
         Sparks = GetComponent<ParticleSystem>();
         BloodParticles = Blood.GetComponent<bloodEmitter>();
@@ -28,11 +30,18 @@ public class DestroyOnCollission : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        IfuckingHitShit(collision);
+        if (CanCollide)
+        {
+            IfuckingHitShit(collision);
+        } else
+        {
+            return;
+        }
     }
 
     private void IfuckingHitShit(Collision collision)
     {
+        CanCollide = false;
         if (collision.collider.gameObject.layer == LayerMask.NameToLayer("Enemy"))
         {
             GameObject THEBLOOD = Instantiate(Blood);

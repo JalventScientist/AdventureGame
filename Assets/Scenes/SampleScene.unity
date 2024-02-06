@@ -665,7 +665,7 @@ MonoBehaviour:
   groundDrag: 7
   sprintspeed: 30
   slideSpeed: 35
-  WallRunSpeed: 0
+  WallRunSpeed: 25
   forceMode: 0
   stamina: 0
   jumpForce: 15
@@ -4150,7 +4150,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: d8c1738cebfda434abe6d6960b06b744, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 9d50320f4f56f45428a6b10ef4f60dca, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 0
   m_Pitch: 1
@@ -9054,7 +9054,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 366216df5bcfb3145a60c06ed5a05686, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 7c611859c6f6fd34d8a4f096b8fb5515, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1

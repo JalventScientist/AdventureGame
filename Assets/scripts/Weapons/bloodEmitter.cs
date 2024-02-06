@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class bloodEmitter : MonoBehaviour
 {
-    private float ExistLength = 3f;
+    private float ExistLength = 20f;
     private float ExistTimer;
     private bool TimerEnabled = false;
     public GameObject Blood;
