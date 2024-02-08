@@ -16,6 +16,7 @@ public class DestroyOnCollission : MonoBehaviour
     public ParticleSystem Sparks;
     public GameObject Blood;
     public bloodEmitter BloodParticles;
+    private SphereCollider Collider;
     private bool CanCollide;
 
     private void Start()
@@ -26,6 +27,7 @@ public class DestroyOnCollission : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         Sparks = GetComponent<ParticleSystem>();
         BloodParticles = Blood.GetComponent<bloodEmitter>();
+        Collider = GetComponent<SphereCollider>();
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -42,6 +44,7 @@ public class DestroyOnCollission : MonoBehaviour
     private void IfuckingHitShit(Collision collision)
     {
         CanCollide = false;
+        Collider.isTrigger = true;
         if (collision.collider.gameObject.layer == LayerMask.NameToLayer("Enemy"))
         {
             GameObject THEBLOOD = Instantiate(Blood);

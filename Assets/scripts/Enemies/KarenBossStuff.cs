@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class FilthBehaviour : MonoBehaviour
+public class KarenBossStuff : MonoBehaviour
 {
     [Header("Activation")]
     public bool BehaviourEnabled;
@@ -17,6 +17,7 @@ public class FilthBehaviour : MonoBehaviour
     private Vector3 lastMovement;
     private bool attacking = false;
     private bool grounded;
+    private float latestDirectionChangeTime;
     private float AttackTime = 2f;
     private float AttackTimer;
 
@@ -35,7 +36,7 @@ public class FilthBehaviour : MonoBehaviour
 
         }
 
-        if(FilthAgent.pathStatus == NavMeshPathStatus.PathComplete)
+        if (FilthAgent.pathStatus == NavMeshPathStatus.PathComplete)
         {
             if (lastMovement != transform.position)
             {
@@ -49,11 +50,21 @@ public class FilthBehaviour : MonoBehaviour
                 }
                 else
                 {
-                    FilthAgent.isStopped = true;
-                    FilthAnimator.Play("Attack");
+                    if(AttackTimer > 0)
+                    {
+                        FilthAgent.isStopped = true;
+                        FilthAnimator.Play("Attack");
+                        AttackTimer -= Time.deltaTime;
+                    } else
+                    {
+                        attacking = false;
+                        FilthAgent.isStopped = false;
+                    }
+
                 }
             }
-        } else
+        }
+        else
         {
             FilthAnimator.Play("Idle");
         }
@@ -64,6 +75,17 @@ public class FilthBehaviour : MonoBehaviour
     private void CheckForAttack()
     {
         float Distance = Vector3.Distance(Player.transform.position, transform.position);
-        print(Distance);
+
+        if (!attacking)
+        {
+            if (Distance <= 4f)
+            {
+                attacking = true;
+                AttackTimer = AttackTime;
+            } else
+            {
+                attacking = false;
+            }
+        }
     }
 }

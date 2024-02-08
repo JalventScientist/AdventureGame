@@ -65,7 +65,6 @@ public class WallRunning : MonoBehaviour
 
     private void FixedUpdate()
     {
-        print(HowManyWalljumps);
         if (pm.wallrunning)
         {
             WallRunningMovement();

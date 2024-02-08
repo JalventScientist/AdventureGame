@@ -57,6 +57,10 @@ public class Spawner : MonoBehaviour
         {
             GameObject CreatedEntity = Instantiate(AvailableEntities[EntityChoice], transform.position, transform.rotation);
             CreatedEntity.GetComponent<FilthBehaviour>().BehaviourEnabled = true;
+        } else if(EntityChoice == 1) // Karen (BOSS)
+        {
+            GameObject CreatedEntity = Instantiate(AvailableEntities[EntityChoice], transform.position, transform.rotation);
+            CreatedEntity.GetComponent<KarenBossStuff>().BehaviourEnabled = true;
         }
         FXlight.intensity = 1f;
         MusicHandler.GetComponent<musicHandler>().EnemyCount += 1;

@@ -5081,10 +5081,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   AvailableEntities:
   - {fileID: 339525522905950874, guid: 54130cacfdec23744bff52277cd5f94e, type: 3}
+  - {fileID: 6859561919706044355, guid: f481341a7292ca44789f18e00c0c57cb, type: 3}
   EntityChoice: 0
   SpawnPoint: {fileID: 4532724863701409136}
   ParticleEmitter: {fileID: 541870721773784348}
-  MusicPlayer: {fileID: 0}
   DelayTime: 5
   StartTimer: 1
   DecrementMultiplier: 1.3
