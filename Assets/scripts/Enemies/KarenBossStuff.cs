@@ -13,79 +13,95 @@ public class KarenBossStuff : MonoBehaviour
     public GameObject FilthPrefab;
     public NavMeshAgent FilthAgent;
     private GameObject Player;
+    private PlayerMovement PlayerMovement;
     private Vector3 movementDirection;
     private Vector3 lastMovement;
     private bool attacking = false;
     private bool grounded;
     private float latestDirectionChangeTime;
-    private float AttackTime = 2f;
+    public float AttackTime = 2f;
     private float AttackTimer;
+    private float MinimumDistance = 1.6f;
+    public float ActualAttackTime = 0.75f;
+    private float ActualAttackTimer;
+    private bool HasAttacked = false;
+    public float SpeedModifier = 1f;
 
     private void Start()
     {
         Player = GameObject.FindWithTag("Player");
         FilthAnimator = FilthPrefab.GetComponent<Animator>();
+        PlayerMovement = Player.GetComponent<PlayerMovement>();
     }
 
     private void Update()
     {
-        CheckForAttack();
+        float Distance = Vector3.Distance(Player.transform.position, transform.position);
         if (BehaviourEnabled)
         {
             FilthAgent.destination = Player.transform.position;
 
         }
-
-        if (FilthAgent.pathStatus == NavMeshPathStatus.PathComplete)
+        if (Distance > MinimumDistance)
         {
-            if (lastMovement != transform.position)
+            if (!attacking)
             {
-                FilthAnimator.Play("Run");
-            }
-            else
-            {
-                if (!attacking)
+                if (FilthAgent.pathStatus == NavMeshPathStatus.PathComplete)
                 {
-                    FilthAnimator.Play("Idle");
+                    if (lastMovement != transform.position)
+                    {
+                        FilthAnimator.Play("Run");
+                    }
                 }
                 else
                 {
-                    if(AttackTimer > 0)
-                    {
-                        FilthAgent.isStopped = true;
-                        FilthAnimator.Play("Attack");
-                        AttackTimer -= Time.deltaTime;
-                    } else
-                    {
-                        attacking = false;
-                        FilthAgent.isStopped = false;
-                    }
-
+                    FilthAnimator.Play("Idle");
                 }
             }
+            lastMovement = transform.position;
+        } else
+        {
+            if(!attacking)
+            {
+                Attack();
+            }
+        }
+        if (AttackTimer > 0)
+        {
+            FilthAgent.isStopped = true;
+            AttackTimer -= Time.deltaTime;
         }
         else
         {
-            FilthAnimator.Play("Idle");
+            attacking = false;
+            FilthAgent.isStopped = false;
         }
-
-        lastMovement = transform.position;
-    }
-
-    private void CheckForAttack()
-    {
-        float Distance = Vector3.Distance(Player.transform.position, transform.position);
-
-        if (!attacking)
+        if(attacking)
         {
-            if (Distance <= 4f)
+            if (!HasAttacked)
             {
-                attacking = true;
-                AttackTimer = AttackTime;
-            } else
-            {
-                attacking = false;
+                if (ActualAttackTimer > 0)
+                {
+                    ActualAttackTimer -= Time.deltaTime;
+                }
+                else
+                {
+                    HasAttacked = true;
+                   if(Distance <= MinimumDistance)
+                    {
+                        PlayerMovement.Push(transform.forward, 10f);
+                    }
+                }
             }
         }
+        print(AttackTimer);
+    }
+    private void Attack()
+    {
+        attacking = true;
+        AttackTimer = AttackTime / SpeedModifier;
+        HasAttacked = false;
+        ActualAttackTimer = ActualAttackTime / SpeedModifier;
+        FilthAnimator.Play("Attack");
     }
 }

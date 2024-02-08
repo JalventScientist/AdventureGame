@@ -13,57 +13,96 @@ public class FilthBehaviour : MonoBehaviour
     public GameObject FilthPrefab;
     public NavMeshAgent FilthAgent;
     private GameObject Player;
+    private PlayerMovement PlayerMovement;
     private Vector3 movementDirection;
     private Vector3 lastMovement;
     private bool attacking = false;
     private bool grounded;
-    private float AttackTime = 2f;
+    private float latestDirectionChangeTime;
+    public float AttackTime = (1f + ((1/3)*2));
     private float AttackTimer;
+    private float MinimumDistance = 1.6f;
+    public float ActualAttackTime = 0.75f;
+    private float ActualAttackTimer;
+    private bool HasAttacked = false;
+    public float SpeedModifier = 1f;
 
     private void Start()
     {
         Player = GameObject.FindWithTag("Player");
         FilthAnimator = FilthPrefab.GetComponent<Animator>();
+        PlayerMovement = Player.GetComponent<PlayerMovement>();
     }
 
     private void Update()
     {
-        CheckForAttack();
+        float Distance = Vector3.Distance(Player.transform.position, transform.position);
         if (BehaviourEnabled)
         {
             FilthAgent.destination = Player.transform.position;
 
         }
-
-        if(FilthAgent.pathStatus == NavMeshPathStatus.PathComplete)
+        if (Distance > MinimumDistance)
         {
-            if (lastMovement != transform.position)
+            if (!attacking)
             {
-                FilthAnimator.Play("Run");
-            }
-            else
-            {
-                if (!attacking)
+                if (FilthAgent.pathStatus == NavMeshPathStatus.PathComplete)
                 {
-                    FilthAnimator.Play("Idle");
+                    if (lastMovement != transform.position)
+                    {
+                        FilthAnimator.Play("Run");
+                    }
                 }
                 else
                 {
-                    FilthAgent.isStopped = true;
-                    FilthAnimator.Play("Attack");
+                    FilthAnimator.Play("Idle");
                 }
             }
-        } else
-        {
-            FilthAnimator.Play("Idle");
+            lastMovement = transform.position;
         }
-
-        lastMovement = transform.position;
+        else
+        {
+            if (!attacking)
+            {
+                Attack();
+            }
+        }
+        if (AttackTimer > 0)
+        {
+            FilthAgent.isStopped = true;
+            AttackTimer -= Time.deltaTime;
+        }
+        else
+        {
+            attacking = false;
+            FilthAgent.isStopped = false;
+        }
+        if (attacking)
+        {
+            if (!HasAttacked)
+            {
+                if (ActualAttackTimer > 0)
+                {
+                    ActualAttackTimer -= Time.deltaTime;
+                }
+                else
+                {
+                    HasAttacked = true;
+                    if (Distance <= MinimumDistance)
+                    {
+                        PlayerMovement.Push(transform.forward, 10f);
+                    }
+                }
+            }
+        }
+        print(AttackTimer);
     }
-
-    private void CheckForAttack()
+    private void Attack()
     {
-        float Distance = Vector3.Distance(Player.transform.position, transform.position);
-        print(Distance);
+        attacking = true;
+        AttackTimer = AttackTime / SpeedModifier;
+        HasAttacked = false;
+        ActualAttackTimer = ActualAttackTime / SpeedModifier;
+        FilthAnimator.Play("Attack");
     }
 }

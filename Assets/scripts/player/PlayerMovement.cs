@@ -274,4 +274,9 @@ public class PlayerMovement : MonoBehaviour
     {
         return Vector3.ProjectOnPlane(direction, slopeHit.normal).normalized;
     }
+
+    public void Push(Vector3 direction, float pushPower)
+    {
+        rb.AddForce(direction * pushPower, ForceMode.Impulse);
+    }
 }
