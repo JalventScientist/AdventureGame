@@ -13,6 +13,7 @@ public class FilthBehaviour : MonoBehaviour
     public GameObject FilthPrefab;
     public NavMeshAgent FilthAgent;
     private GameObject Player;
+    private Health PlayerHealth;
     private PlayerMovement PlayerMovement;
     private Vector3 movementDirection;
     private Vector3 lastMovement;
@@ -26,10 +27,12 @@ public class FilthBehaviour : MonoBehaviour
     private float ActualAttackTimer;
     private bool HasAttacked = false;
     public float SpeedModifier = 1f;
+    public float AttackDamage;
 
     private void Start()
     {
         Player = GameObject.FindWithTag("Player");
+        PlayerHealth = Player.GetComponent<Health>();
         FilthAnimator = FilthPrefab.GetComponent<Animator>();
         PlayerMovement = Player.GetComponent<PlayerMovement>();
     }
@@ -91,11 +94,11 @@ public class FilthBehaviour : MonoBehaviour
                     if (Distance <= MinimumDistance)
                     {
                         PlayerMovement.Push(transform.forward, 10f);
+                        PlayerHealth.DamagePlayer(AttackDamage);
                     }
                 }
             }
         }
-        print(AttackTimer);
     }
     private void Attack()
     {

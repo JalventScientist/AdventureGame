@@ -11,6 +11,8 @@ public class PlayerCam : MonoBehaviour
     public Transform orientation;
     public Transform camHolder;
 
+    public Camera UICamera;
+
     float xRotation;
     float yRotation;
 
@@ -33,9 +35,10 @@ public class PlayerCam : MonoBehaviour
         orientation.rotation = Quaternion.Euler(0, yRotation, 0);
     }
 
-    public void DoFov(float endValue)
+    public void DoFov(float endValue, float UIModifier)
     {
         GetComponent<Camera>().DOFieldOfView(endValue, 0.25f);
+        UICamera.DOFieldOfView(endValue * UIModifier, 0.25f);
     }
 
     public void DoTilt(float zTilt)

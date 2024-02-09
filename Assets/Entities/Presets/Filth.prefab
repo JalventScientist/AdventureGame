@@ -117,6 +117,10 @@ MonoBehaviour:
   FilthAnimator: {fileID: 8873627660937895917}
   FilthPrefab: {fileID: 2778308858454810413}
   FilthAgent: {fileID: 1909534984253195016}
+  AttackTime: 1
+  ActualAttackTime: 0.75
+  SpeedModifier: 1
+  AttackDamage: 5
 --- !u!54 &1291214146488088632
 Rigidbody:
   m_ObjectHideFlags: 0

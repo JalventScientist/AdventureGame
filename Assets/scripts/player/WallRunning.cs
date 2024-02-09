@@ -159,7 +159,7 @@ public class WallRunning : MonoBehaviour
 
         rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
         //apply cam fx
-        cam.DoFov(DefaultFov * 1.1f);
+        cam.DoFov(DefaultFov * 1.1f, 0.9f);
         if (wallLeft) cam.DoTilt(-5f);
         if (wallRight) cam.DoTilt(5f);
     }
@@ -192,7 +192,7 @@ public class WallRunning : MonoBehaviour
     {
         pm.wallrunning = false;
 
-        cam.DoFov(DefaultFov);
+        cam.DoFov(DefaultFov, 1f);
         cam.DoTilt(0f);
     }
 

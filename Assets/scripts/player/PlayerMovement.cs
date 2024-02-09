@@ -6,6 +6,7 @@ using TMPro;
 public class PlayerMovement : MonoBehaviour
 {
     [Header("Movement")]
+    public float requiredMoveSpeed;
     public float moveSpeed;
     public float walkSpeed;
     public float groundDrag;
@@ -13,12 +14,13 @@ public class PlayerMovement : MonoBehaviour
     public float slideSpeed;
     public float WallRunSpeed;
     public ForceMode forceMode;
+    private bool isSprinting;
 
     private float desiredMoveSpeed;
     private float lastDesiredMoveSpeed;
 
     public float stamina;
-    private float staminaLeft;
+    public float staminaLeft;
 
     [Header("Jumping")]
     public float jumpForce;
@@ -47,14 +49,15 @@ public class PlayerMovement : MonoBehaviour
     private RaycastHit slopeHit;
     private bool exitingSlope;
 
-    [Header("Debug")]
+    [Header("Other")]
+    public PlayerCam plrCam;
     public bool inDebugMode;
     public TMP_Text SlopeText;
 
     public Transform orientation;
 
-    float hozInput;
-    float vertInput;
+    public float hozInput;
+    public float vertInput;
 
     Vector3 moveDirection;
 
@@ -81,6 +84,8 @@ public class PlayerMovement : MonoBehaviour
         readyToJump = true;
 
         startYScale = transform.localScale.y;
+        isSprinting = false;
+        staminaLeft = stamina;
     }
 
     private void Update()
@@ -96,6 +101,20 @@ public class PlayerMovement : MonoBehaviour
         {
             rb.drag = 0;
         }
+        if(isSprinting)
+        {
+            if(staminaLeft >0)
+            {
+                staminaLeft -= Time.deltaTime;
+            }
+        } else
+        {
+            if(staminaLeft < stamina)
+            {
+                staminaLeft += Time.deltaTime;
+            }
+        }
+        staminaLeft = Mathf.Clamp(staminaLeft, 0, stamina);
     }
 
     private void FixedUpdate()
@@ -135,6 +154,18 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetKeyUp(crouchKey) || Input.GetKey(jumpKey))
         {
             transform.localScale = new Vector3(transform.localScale.x, startYScale, transform.localScale.z);
+        }
+        if (Input.GetKeyDown(sprintKey) && staminaLeft > 0)
+        {
+            moveSpeed = sprintspeed;
+            isSprinting = true;
+            plrCam.DoFov(70, 0.9f);
+        }
+        if(Input.GetKeyUp(sprintKey) || staminaLeft <= 0)
+        {
+            moveSpeed = requiredMoveSpeed;
+            isSprinting = false;
+            plrCam.DoFov(60, 1f);
         }
     }
     private void StateHandler()
