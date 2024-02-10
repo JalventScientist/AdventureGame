@@ -20,7 +20,7 @@ public class KarenBossStuff : MonoBehaviour
     private bool attacking = false;
     private bool grounded;
     private float latestDirectionChangeTime;
-    public float AttackTime = 2f;
+    public float AttackTime = 2.1f;
     private float AttackTimer;
     private float MinimumDistance = 1.6f;
     public float ActualAttackTime = 0.75f;
