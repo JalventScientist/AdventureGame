@@ -6,7 +6,7 @@ using UnityEngine;
 public class Revolver : MonoBehaviour
 {
     [Header("GunStats")]
-    public float ReloadTime = 1.7f;
+    public float ReloadTime = 0.875f;
     private float ReloadTimer;
     public bool CanFire;
     private bool firing;

@@ -99,7 +99,7 @@ MonoBehaviour:
   ReloadTime: 0.958
   MinSpread: -10
   MaxSpread: 10
-  Damage: 0
+  Damage: 30
 --- !u!1001 &1915085702958733050
 PrefabInstance:
   m_ObjectHideFlags: 0

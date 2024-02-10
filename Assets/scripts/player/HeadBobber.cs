@@ -6,14 +6,18 @@ public class HeadBobber : MonoBehaviour
 {
     public float walkingBobbingSpeed;
     public float bobbingAmount;
-    public PlayerMovement Plr;
-    public Rigidbody rb;
+    private GameObject PlrObject;
+    private PlayerMovement Plr;
+    private Rigidbody rb;
 
     float defaultPosY = 0f;
     float timer = 0f;
 
     private void Start()
     {
+        PlrObject = GameObject.FindWithTag("Player");
+        Plr = PlrObject.GetComponent<PlayerMovement>();
+        rb = PlrObject.GetComponent<Rigidbody>();
         defaultPosY = transform.localPosition.y;
 
     }

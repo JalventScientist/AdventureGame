@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 public class RevolverFire : MonoBehaviour
 {
@@ -9,15 +10,47 @@ public class RevolverFire : MonoBehaviour
     private bool CanFire;
     public float ReloadTime = 1.7f;
     private float ReloadTimer;
-    public float MinSpread = -10f;
-    public float MaxSpread = 10f;
+    public float maxDistance = 90f;
     public float Damage;
+    public LayerMask WhatIsEnemy;
+    public GameObject orientation;
+    public LineRenderer RevolverBulletLine;
+    public GameObject Blood;
+    public bloodEmitter BloodParticles;
+    public GameObject hitPos;
+    private float length = 0f;
+
+    private void Start()
+    {
+        orientation = GameObject.FindWithTag("orientation");
+        BloodParticles = Blood.GetComponent<bloodEmitter>();
+    }
+
+    private void Update()
+    {
+        if (length > 0f)
+        {
+            length -= Time.deltaTime;
+            RevolverBulletLine.startWidth = length;
+        }
+       
+    }
     public void Fire()
     {
-        for (int i = 0; i < 10; i++)
+        Vector3 fwd = orientation.transform.TransformDirection(Vector3.forward);
+        RaycastHit hitenemy;
+        if(Physics.Raycast(orientation.transform.position, orientation.transform.forward, out hitenemy))
         {
-            GameObject bullet = Instantiate(projectile, transform.position, transform.rotation * Quaternion.Euler(Random.Range(MinSpread, MaxSpread), Random.Range(MinSpread, MaxSpread), Random.Range(MinSpread, MaxSpread)));
-            bullet.GetComponent<Rigidbody>().AddRelativeForce(new Vector3(0, 0, launchVelocity));
+            hitPos.transform.position = hitenemy.point;
+            RevolverBulletLine.SetPosition(1, hitPos.transform.position);
+            length = 0.7f;
+            
+            if(hitenemy.collider.gameObject.layer == LayerMask.NameToLayer("Enemy"))
+            {
+                GameObject THEBLOOD = Instantiate(Blood);
+                THEBLOOD.GetComponent<bloodEmitter>().AttachToObject(hitenemy.collider.transform.position);
+                hitenemy.collider.gameObject.GetComponent<EnemyHealth>().health -= Damage;
+            }
         }
     }
 }
