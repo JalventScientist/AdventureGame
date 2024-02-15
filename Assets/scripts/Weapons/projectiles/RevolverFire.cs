@@ -13,27 +13,19 @@ public class RevolverFire : MonoBehaviour
     public float maxDistance = 90f;
     public float Damage;
     public LayerMask WhatIsEnemy;
-    public GameObject orientation;
-    public LineRenderer RevolverBulletLine;
+    public Camera orientation;
+    public GameObject RevolverBulletLine;
     public GameObject Blood;
     public bloodEmitter BloodParticles;
-    public GameObject hitPos;
-    private float length = 0f;
+    public GameObject StartPos;
+    public GameObject HitPos;
+    private RevolverTrail TrailScript;
 
     private void Start()
     {
-        orientation = GameObject.FindWithTag("orientation");
+        orientation = GameObject.FindWithTag("PlrCam").GetComponent<Camera>();
         BloodParticles = Blood.GetComponent<bloodEmitter>();
-    }
-
-    private void Update()
-    {
-        if (length > 0f)
-        {
-            length -= Time.deltaTime;
-            RevolverBulletLine.startWidth = length;
-        }
-       
+        TrailScript = RevolverBulletLine.GetComponent<RevolverTrail>();
     }
     public void Fire()
     {
@@ -41,15 +33,14 @@ public class RevolverFire : MonoBehaviour
         RaycastHit hitenemy;
         if(Physics.Raycast(orientation.transform.position, orientation.transform.forward, out hitenemy))
         {
-            hitPos.transform.position = hitenemy.point;
-            RevolverBulletLine.SetPosition(1, hitPos.transform.position);
-            length = 0.7f;
-            
-            if(hitenemy.collider.gameObject.layer == LayerMask.NameToLayer("Enemy"))
+            HitPos.transform.position = hitenemy.point;
+            float Distance = Vector3.Distance(orientation.transform.position, hitenemy.point);
+            TrailScript.setTrail(Distance);
+            if (hitenemy.collider.gameObject.layer == LayerMask.NameToLayer("Enemy"))
             {
                 GameObject THEBLOOD = Instantiate(Blood);
                 THEBLOOD.GetComponent<bloodEmitter>().AttachToObject(hitenemy.collider.transform.position);
-                hitenemy.collider.gameObject.GetComponent<EnemyHealth>().health -= Damage;
+                hitenemy.transform.gameObject.GetComponent<EnemyHealth>().health -= Damage;
             }
         }
     }
