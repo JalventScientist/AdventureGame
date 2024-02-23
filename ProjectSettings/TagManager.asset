@@ -9,6 +9,7 @@ TagManager:
   - gun
   - orientation
   - PlrCam
+  - LevelStarter
   layers:
   - Default
   - TransparentFX
