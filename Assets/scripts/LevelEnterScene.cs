@@ -30,8 +30,11 @@ public class LevelEnterScene : MonoBehaviour
     private float FadeTime = 4.7f;
     private float FadeTimer;
     bool hasFaded = false;
+    [Header("References")]
+    private PauseGame MenuHandler;
     void Start()
     {
+        MenuHandler = GameObject.Find("MenuHandler").GetComponent<PauseGame>();
         Image = Fade.GetComponent<RawImage>();
         if (TriggerOrTimer)
         {
@@ -64,6 +67,7 @@ public class LevelEnterScene : MonoBehaviour
                 PlayerAnimator.gameObject.SetActive(false);
                 CameraDisable.SetActive(false);
                 Crosshair.SetActive(true);
+                MenuHandler.CanPressMenu = true;
                 
             }
             if(!hasShaken)
