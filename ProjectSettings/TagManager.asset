@@ -10,6 +10,7 @@ TagManager:
   - orientation
   - PlrCam
   - LevelStarter
+  - DataManager
   layers:
   - Default
   - TransparentFX

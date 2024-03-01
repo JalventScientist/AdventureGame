@@ -18,6 +18,16 @@ public class MainMenu : MonoBehaviour
     public TMP_Text[] LevelText;
     public string[] LevelTextStrings;
 
+    public TMP_Text[] Stages;
+    public string[] StagesStrings;
+
+    public TMP_Text[] LevelSelections;
+    public string[] Levels0Strings;
+    public string[] Levels1Strings;
+
+    private bool StagesOpened = false;
+    private bool SelectingLevel = false;
+
     private void Start()
     {
         TitleInfo.maxVisibleCharacters = TitleInfo.text.Length;
@@ -45,6 +55,7 @@ public class MainMenu : MonoBehaviour
     IEnumerator SetText(TMP_Text TextToChange, string SetText)
     {
         TextToChange.text = SetText;
+        TextToChange.maxVisibleCharacters = 0;
         string Text = SetText;
         foreach (char c in Text)
         {
@@ -92,6 +103,28 @@ public class MainMenu : MonoBehaviour
             }
         }
     }
+
+    IEnumerator OpenStages(bool Opened)
+    {
+        if(Opened)
+        {
+            for (int i = 0; i < Stages.Length; i++)
+            {
+                StartCoroutine(ChangeText(Stages[i], StagesStrings[i]));
+            }
+            StagesOpened = true;
+            yield return new WaitForEndOfFrame();
+        } else
+        {
+            for (int i = 0; i < Stages.Length; i++)
+            {
+                StartCoroutine(ChangeText(Stages[i], StagesStrings[i]));
+            }
+            StagesOpened = false;
+            yield return new WaitForEndOfFrame();
+        }
+        
+    }
     public void PlayButton(bool toggle)
     {
         if(toggle)
@@ -101,5 +134,25 @@ public class MainMenu : MonoBehaviour
         {
             StartCoroutine(setMenu(true));
         }
+    }
+
+    public void StartSelectingStage(bool toggle)
+    {
+        if(toggle) {
+            if(!StagesOpened)
+            {
+                StartCoroutine(OpenStages(true));
+            }
+        } else
+        {
+            if (StagesOpened)
+            {
+                StartCoroutine(OpenStages(false));
+            }
+        }
+    }
+    public void StartSelectingLevel(bool toggle)
+    {
+
     }
 }
