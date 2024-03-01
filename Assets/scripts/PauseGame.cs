@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
-using Unity.UI;
+using UnityEngine.UI;
 using TMPro;
 using UnityEngine.SceneManagement;
 
@@ -67,13 +67,8 @@ public class PauseGame : MonoBehaviour
 
     public void QuitLevel()
     {
-        if (Application.isEditor)
-        {
-            EditorApplication.ExitPlaymode();
-        } else
-        {
-            Application.Quit();
-        }
+        SceneManager.LoadScene("Menu");
+        Time.timeScale = 1f;
     }
 
     public void RestartLevel(bool FromLastCheckPoint)

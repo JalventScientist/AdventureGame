@@ -14,11 +14,14 @@ public class DataManager : MonoBehaviour
         public bool SecretLevel1;
         public bool[] Stage2;
         public bool SecretLevel2;
+        public bool FirsttimePlaying;
+        public int CurrentStage;
+        public int CurrentLevel;
     }
     [Header("Saved data IG????")]
 
     public bool[] Stage0 = {true, false, false, false, false}; // 5 Levels per stage, 1 extra secret level but that's a diff value
-
+    public bool FirsttimePlaying = true;
     public bool[] Stage1 = {false, false, false, false,false}; // 5 Levels per stage, 1 extra secret level but that's a diff value
     public bool SecretLevel1 = false;
 
@@ -27,6 +30,8 @@ public class DataManager : MonoBehaviour
 
     public static DataManager Instance;
 
+    public int CurrentStage = 0;
+    public int CurrentLevel = 1;
 
     private void Awake()
     {
@@ -47,6 +52,9 @@ public class DataManager : MonoBehaviour
         data.Stage2 = Stage2;
         data.SecretLevel2 = SecretLevel2;
         data.SecretLevel1 = SecretLevel1;
+        data.FirsttimePlaying = FirsttimePlaying;
+        data.CurrentLevel = CurrentLevel;
+        data.CurrentStage = CurrentStage;
         string json = JsonUtility.ToJson(data);
         File.WriteAllText(Application.persistentDataPath + "/savefile.json", json);
     }
@@ -63,6 +71,9 @@ public class DataManager : MonoBehaviour
             Stage2 = data.Stage2;
             SecretLevel1 = data.SecretLevel1;
             SecretLevel2 = data.SecretLevel2;
+            FirsttimePlaying = data.FirsttimePlaying;
+            CurrentLevel = data.CurrentLevel;
+            CurrentStage = data.CurrentStage;
         }
     }
 
