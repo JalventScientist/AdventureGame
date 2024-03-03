@@ -316,6 +316,8 @@ public class MainMenu : MonoBehaviour
         {
             if(SelectedLevel == 0)
             {
+                DataManager.CurrentStage = 0;
+                DataManager.CurrentLevel = 0;
                 SceneManager.LoadScene("SampleScene");
             }
         }

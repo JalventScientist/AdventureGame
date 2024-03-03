@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8397697614103046964}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: worldHit
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -42,7 +42,7 @@ GameObject:
   - component: {fileID: 1257385286095061171}
   - component: {fileID: 3725679718437195654}
   - component: {fileID: 7339406623107080473}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: RevolverTrail
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -191,7 +191,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3039719104931244659}
   - component: {fileID: 6685104147486312168}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: PistolBulletPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -250,7 +250,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3318575479512601282}
   - component: {fileID: 9067810985081906653}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: PistolPos
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -295,6 +295,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3318575479512601282}
     m_Modifications:
+    - target: {fileID: -8777143526381610417, guid: 2829ff0fccd893545abf6240129b04e8, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 2829ff0fccd893545abf6240129b04e8, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0
@@ -335,14 +339,78 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7806158582810306703, guid: 2829ff0fccd893545abf6240129b04e8, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: -6660526161561840970, guid: 2829ff0fccd893545abf6240129b04e8, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: -4816866114650761466, guid: 2829ff0fccd893545abf6240129b04e8, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: -4537691313049115636, guid: 2829ff0fccd893545abf6240129b04e8, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: -4067779551400214417, guid: 2829ff0fccd893545abf6240129b04e8, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: -659501313535562463, guid: 2829ff0fccd893545abf6240129b04e8, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 350232010194562802, guid: 2829ff0fccd893545abf6240129b04e8, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 776945306549480076, guid: 2829ff0fccd893545abf6240129b04e8, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 2829ff0fccd893545abf6240129b04e8, type: 3}
       propertyPath: m_Name
       value: revolver
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 2829ff0fccd893545abf6240129b04e8, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1193799435595250344, guid: 2829ff0fccd893545abf6240129b04e8, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 4416171611312922422, guid: 2829ff0fccd893545abf6240129b04e8, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 5530701255766440318, guid: 2829ff0fccd893545abf6240129b04e8, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 5777436035224653207, guid: 2829ff0fccd893545abf6240129b04e8, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 5866666021909216657, guid: 2829ff0fccd893545abf6240129b04e8, type: 3}
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: 06a15e0bc7020de46ae61f155e0a466c, type: 2}
+    - target: {fileID: 6184651544800498931, guid: 2829ff0fccd893545abf6240129b04e8, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 7772217124968123340, guid: 2829ff0fccd893545abf6240129b04e8, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 8164710850957252413, guid: 2829ff0fccd893545abf6240129b04e8, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:

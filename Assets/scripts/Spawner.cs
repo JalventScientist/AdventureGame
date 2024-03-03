@@ -21,6 +21,7 @@ public class Spawner : MonoBehaviour
     private bool HasSpawned = false;
     public bool StartTimer;
     public float DecrementMultiplier;
+    public bool IsTutorialEnemy = false;
     private void Start()
     {
         DelayTimer = DelayTime;
@@ -38,7 +39,6 @@ public class Spawner : MonoBehaviour
             }
             else if (DelayTimer <= 0)
             {
-                HasSpawned = true;
                 Spawn();
             }
         }
@@ -53,10 +53,14 @@ public class Spawner : MonoBehaviour
 
     private void Spawn()
     {
-        if(EntityChoice == 0) // Filth
+        HasSpawned = true;
+        if (EntityChoice == 0) // Filth
         {
             GameObject CreatedEntity = Instantiate(AvailableEntities[EntityChoice], transform.position, transform.rotation);
-            CreatedEntity.GetComponent<FilthBehaviour>().BehaviourEnabled = true;
+            if (!IsTutorialEnemy)
+            {
+                CreatedEntity.GetComponent<FilthBehaviour>().BehaviourEnabled = true;
+            }
         } else if(EntityChoice == 1) // Karen (BOSS)
         {
             GameObject CreatedEntity = Instantiate(AvailableEntities[EntityChoice], transform.position, transform.rotation);

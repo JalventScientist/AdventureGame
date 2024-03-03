@@ -51,8 +51,6 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("Other")]
     public PlayerCam plrCam;
-    public bool inDebugMode;
-    public TMP_Text SlopeText;
 
     public Transform orientation;
 
@@ -234,10 +232,6 @@ public class PlayerMovement : MonoBehaviour
 
         if (OnSlope() && !exitingSlope)
         {
-            if(inDebugMode == true)
-            {
-                SlopeText.text = "On Slope: true";
-            }
             rb.AddForce(GetSlopeMoveDirection(moveDirection) * moveSpeed * 20f, ForceMode.Force);
             if (rb.velocity.y > 0)
             {
@@ -247,11 +241,9 @@ public class PlayerMovement : MonoBehaviour
 
         else if (grounded)
         {
-            SlopeText.text = "On Slope: false";
             rb.AddForce(moveDirection.normalized * moveSpeed * 10f, forceMode);
         } else if (!grounded)
         {
-            SlopeText.text = "On Slope: false";
             rb.AddForce(moveDirection.normalized * moveSpeed * 10f * airMultiplier, forceMode);
         }
 

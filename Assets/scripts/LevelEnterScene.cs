@@ -30,6 +30,7 @@ public class LevelEnterScene : MonoBehaviour
     private float FadeTime = 4.7f;
     private float FadeTimer;
     bool hasFaded = false;
+    public AudioSource LandEffect;
     [Header("References")]
     private PauseGame MenuHandler;
     void Start()
@@ -42,6 +43,11 @@ public class LevelEnterScene : MonoBehaviour
         }
     }
 
+    IEnumerator HitSound()
+    {
+        yield return new WaitForSeconds(0.375f);
+        LandEffect.Play();
+    }
     // Update is called once per frame
     void Update()
     {
@@ -103,6 +109,7 @@ public class LevelEnterScene : MonoBehaviour
 
     public void SpawnPlayer()
     {
+        StartCoroutine(HitSound());
         Spawning = true;
         PlayerAnimator.Play("Spawn");
         AnimationTimer = AnimationTime;

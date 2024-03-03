@@ -34,13 +34,17 @@ public class PauseGame : MonoBehaviour
             {
                 if (Input.GetKeyDown(PauseKey))
                 {
-                    HasPressedMenu = true;
-                    if(MenuIsActive)
+                   if(CanPressMenu)
                     {
-                        TriggerPause(false);
-                    } else
-                    {
-                        TriggerPause(true);
+                        HasPressedMenu = true;
+                        if (MenuIsActive)
+                        {
+                            TriggerPause(false);
+                        }
+                        else
+                        {
+                            TriggerPause(true);
+                        }
                     }
                 }
             }

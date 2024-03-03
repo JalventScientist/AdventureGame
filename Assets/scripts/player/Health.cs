@@ -8,15 +8,14 @@ public class Health : MonoBehaviour
     public float CurrentHealth;
 
     private float ITimer;
-    public float ITime = 0.3f;
+    public float ITime = 0.1f;
     private bool isDamaged;
+    public bool DeathConfirmed = false;
 
     [Header("references")]
     public PlayerUI UI;
-
-    [Header("Debug")]
-    public bool KeyToDamage;
-    public KeyCode DamageKey;
+    public DeathScreen DeathUI;
+    public GameObject UIRenderer;
     private void Start()
     {
         CurrentHealth = MaxHealth;
@@ -31,7 +30,15 @@ public class Health : MonoBehaviour
             UI.changeHealthUI(true);
             isDamaged = true;
             ITimer = ITime;
+            
         }
+    }
+
+    public void HealPlayer(float HealAmount)
+    {
+        float RoundedDamage = Mathf.Round(HealAmount);
+        CurrentHealth += RoundedDamage;
+        UI.changeHealthUI(true);
     }
     private void Update()
     {
@@ -46,10 +53,14 @@ public class Health : MonoBehaviour
                 isDamaged = false;
             }
         }
-
-        if(Input.GetKey(DamageKey))
+        if (CurrentHealth <= 0)
         {
-            DamagePlayer(10f);
+            if(!DeathConfirmed)
+            {
+                DeathConfirmed = true;
+                UIRenderer.SetActive(false);
+                DeathUI.Die();
+            }
         }
     }
 }
