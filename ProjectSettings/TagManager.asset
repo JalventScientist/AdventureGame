@@ -12,6 +12,7 @@ TagManager:
   - LevelStarter
   - DataManager
   - PlayerCollider
+  - PlrMessageSystem
   layers:
   - Default
   - TransparentFX

@@ -113,7 +113,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22d62a7e5680f9341b026694c1e33f40, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BehaviourEnabled: 1
+  BehaviourEnabled: 0
   FilthAnimator: {fileID: 8873627660937895917}
   FilthPrefab: {fileID: 2778308858454810413}
   FilthAgent: {fileID: 1909534984253195016}

@@ -39,62 +39,62 @@ public class FilthBehaviour : MonoBehaviour
 
     private void Update()
     {
-        float Distance = Vector3.Distance(Player.transform.position, transform.position);
         if (BehaviourEnabled)
         {
-            FilthAgent.destination = Player.transform.position;
+            float Distance = Vector3.Distance(Player.transform.position, transform.position);
 
-        }
-        if (Distance > MinimumDistance)
-        {
-            if (!attacking)
+            FilthAgent.destination = Player.transform.position;
+            if (Distance > MinimumDistance)
             {
-                if (FilthAgent.pathStatus == NavMeshPathStatus.PathComplete)
+                if (!attacking)
                 {
-                    if (lastMovement != transform.position)
+                    if (FilthAgent.pathStatus == NavMeshPathStatus.PathComplete)
                     {
-                        FilthAnimator.Play("Run");
+                        if (lastMovement != transform.position)
+                        {
+                            FilthAnimator.Play("Run");
+                        }
+                    }
+                    else
+                    {
+                        FilthAnimator.Play("Idle");
                     }
                 }
-                else
+                lastMovement = transform.position;
+            }
+            else
+            {
+                if (!attacking)
                 {
-                    FilthAnimator.Play("Idle");
+                    Attack();
                 }
             }
-            lastMovement = transform.position;
-        }
-        else
-        {
-            if (!attacking)
+            if (AttackTimer > 0)
             {
-                Attack();
+                FilthAgent.isStopped = true;
+                AttackTimer -= Time.deltaTime;
             }
-        }
-        if (AttackTimer > 0)
-        {
-            FilthAgent.isStopped = true;
-            AttackTimer -= Time.deltaTime;
-        }
-        else
-        {
-            attacking = false;
-            FilthAgent.isStopped = false;
-        }
-        if (attacking)
-        {
-            if (!HasAttacked)
+            else
             {
-                if (ActualAttackTimer > 0)
+                attacking = false;
+                FilthAgent.isStopped = false;
+            }
+            if (attacking)
+            {
+                if (!HasAttacked)
                 {
-                    ActualAttackTimer -= Time.deltaTime;
-                }
-                else
-                {
-                    HasAttacked = true;
-                    if (Distance <= MinimumDistance)
+                    if (ActualAttackTimer > 0)
                     {
-                        PlayerMovement.Push(transform.forward, 10f);
-                        PlayerHealth.DamagePlayer(AttackDamage);
+                        ActualAttackTimer -= Time.deltaTime;
+                    }
+                    else
+                    {
+                        HasAttacked = true;
+                        if (Distance <= MinimumDistance)
+                        {
+                            PlayerMovement.Push(transform.forward, 10f);
+                            PlayerHealth.DamagePlayer(AttackDamage);
+                        }
                     }
                 }
             }

@@ -51,7 +51,7 @@ public class Spawner : MonoBehaviour
         }
     }
 
-    private void Spawn()
+    public void Spawn()
     {
         HasSpawned = true;
         if (EntityChoice == 0) // Filth

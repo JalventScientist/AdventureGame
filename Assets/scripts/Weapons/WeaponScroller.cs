@@ -43,7 +43,6 @@ public class WeaponScroller : MonoBehaviour
                 if (NextWeapon > MaxWeapon)
                 {
                     NextWeapon = 0;
-                    print("yes");
                 }
                 ChangeWeapon(NextWeapon);
             }
@@ -53,7 +52,6 @@ public class WeaponScroller : MonoBehaviour
                 if (NextWeapon < 0)
                 {
                     NextWeapon = MaxWeapon;
-                    print("yes");
                 }
                 ChangeWeapon(NextWeapon);
             }
