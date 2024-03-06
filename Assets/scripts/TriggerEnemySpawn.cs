@@ -1,7 +1,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 
 public class NewBehaviourScript : MonoBehaviour
@@ -15,6 +17,13 @@ public class NewBehaviourScript : MonoBehaviour
     [TextArea(3,10)]
     public string MessageToSet;
     private PlayerMessage PlrMessage;
+    public bool TriggersArena = false;
+    public bool ArenaActive = false;
+
+    public GameObject[] DoorsToLock;
+
+    public int ActiveEntities;
+    public Transform ArenaObject;
 
     bool Triggered;
 
@@ -29,10 +38,47 @@ public class NewBehaviourScript : MonoBehaviour
         {
             if (Collission.gameObject.tag == "PlayerCollider")
             {
-                SpawnWave(1);
+                if(TriggersArena)
+                {
+                    for(int i = 0; i < DoorsToLock.Length; i++)
+                    {
+                        DoorsToLock[i].GetComponent<Door>().TriggerArena(true);
+                    }
+                    StartCoroutine(SpawnWithDelay(0.5f));
+                } else
+                {
+                    SpawnWave(1);
+                }
+                
             }
             Triggered = true;
         }
+    }
+
+    private void Update()
+    {
+        if (ArenaActive) {
+            ActiveEntities = 0;
+            foreach(Transform child in ArenaObject)
+            {
+                ActiveEntities++;
+            }
+
+            if(ActiveEntities <= 0) { //Arena cleared
+                ArenaActive = false;
+                for (int i = 0; i < DoorsToLock.Length; i++)
+                {
+                    DoorsToLock[i].GetComponent<Door>().TriggerArena(false);
+                }
+            }
+        }
+    }
+
+    IEnumerator SpawnWithDelay(float DelayTime)
+    {
+        yield return new WaitForSeconds(DelayTime);
+        SpawnWave(1);
+        ArenaActive = true;
     }
 
     public void SpawnWave(int WaveNumer)
@@ -43,6 +89,7 @@ public class NewBehaviourScript : MonoBehaviour
             {
                 PrimaryWave[i].GetComponent<Spawner>().Spawn();
             }
+
         } else
         {
             if(HasSecondWave)

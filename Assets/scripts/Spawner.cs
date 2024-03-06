@@ -13,6 +13,8 @@ public class Spawner : MonoBehaviour
     public GameObject ParticleEmitter;
     private GameObject MusicHandler;
 
+    public Transform Arena;
+
     private Light FXlight;
 
     [Header("Cheese")]
@@ -60,12 +62,16 @@ public class Spawner : MonoBehaviour
             if (!IsTutorialEnemy)
             {
                 CreatedEntity.GetComponent<FilthBehaviour>().BehaviourEnabled = true;
+                
             }
+            CreatedEntity.transform.parent = Arena;
         } else if(EntityChoice == 1) // Karen (BOSS)
         {
             GameObject CreatedEntity = Instantiate(AvailableEntities[EntityChoice], transform.position, transform.rotation);
             CreatedEntity.GetComponent<KarenBossStuff>().BehaviourEnabled = true;
+            CreatedEntity.transform.parent = Arena;
         }
+
         FXlight.intensity = 1f;
         MusicHandler.GetComponent<musicHandler>().EnemyCount += 1;
         var emitParams = new ParticleSystem.EmitParams();
