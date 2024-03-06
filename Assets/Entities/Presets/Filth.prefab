@@ -145,7 +145,7 @@ Rigidbody:
   m_ImplicitTensor: 1
   m_UseGravity: 1
   m_IsKinematic: 0
-  m_Interpolate: 1
+  m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 2
 --- !u!195 &1909534984253195016
@@ -158,7 +158,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.37
-  m_Speed: 20
+  m_Speed: 15
   m_Acceleration: 1e+13
   avoidancePriority: 50
   m_AngularSpeed: 1280

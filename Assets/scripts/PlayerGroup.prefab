@@ -472,13 +472,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fbec4ddd92bb52a4f950c70d6574f6ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  requiredMoveSpeed: 15
-  moveSpeed: 15
+  requiredMoveSpeed: 13
+  moveSpeed: 13
   walkSpeed: 0
   groundDrag: 7
-  sprintspeed: 25
-  slideSpeed: 25
-  WallRunSpeed: 20
+  sprintspeed: 17
+  slideSpeed: 17
+  WallRunSpeed: 15
   forceMode: 0
   stamina: 5
   staminaLeft: 0
@@ -497,8 +497,6 @@ MonoBehaviour:
   IswalkingOnGround: 0
   maxSlopeAngle: 75
   plrCam: {fileID: 6073626015345732401}
-  inDebugMode: 0
-  SlopeText: {fileID: 0}
   orientation: {fileID: 1203973480886334247}
   hozInput: 0
   vertInput: 0
@@ -576,9 +574,10 @@ MonoBehaviour:
   MaxHealth: 100
   CurrentHealth: 0
   ITime: 0.3
+  DeathConfirmed: 0
   UI: {fileID: 6071880089483232568}
-  KeyToDamage: 1
-  DamageKey: 104
+  DeathUI: {fileID: 0}
+  UIRenderer: {fileID: 0}
 --- !u!1 &4168502661079272351
 GameObject:
   m_ObjectHideFlags: 0
