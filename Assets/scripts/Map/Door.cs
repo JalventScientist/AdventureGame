@@ -27,11 +27,6 @@ public class Door : MonoBehaviour
     public bool CanOpenDoor;
     private bool DoorOpen = false;
 
-    private void Start()
-    {
-        Chunk2.SetActive(false); // You spawn In this chunk anyway smh
-    }
-
     private void Update()
     {
         if (CanOpenDoor)

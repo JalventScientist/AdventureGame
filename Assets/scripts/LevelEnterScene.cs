@@ -33,8 +33,13 @@ public class LevelEnterScene : MonoBehaviour
     public AudioSource LandEffect;
     [Header("References")]
     private PauseGame MenuHandler;
+    public GameObject[] Chunks;
     void Start()
     {
+        for (int i = 0; i < Chunks.Length; i++)
+        {
+                Chunks[i].SetActive(false);
+        }
         MenuHandler = GameObject.Find("MenuHandler").GetComponent<PauseGame>();
         Image = Fade.GetComponent<RawImage>();
         if (TriggerOrTimer)

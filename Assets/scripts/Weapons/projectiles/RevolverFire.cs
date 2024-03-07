@@ -13,6 +13,7 @@ public class RevolverFire : MonoBehaviour
     public float maxDistance = 90f;
     public float Damage;
     public LayerMask WhatIsEnemy;
+    public LayerMask EnemyTrigger;
     public Camera orientation;
     public GameObject RevolverBulletLine;
     public GameObject Blood;
@@ -21,17 +22,23 @@ public class RevolverFire : MonoBehaviour
     public GameObject HitPos;
     private RevolverTrail TrailScript;
 
+    int LayerMasks;
+    
+
     private void Start()
     {
         orientation = GameObject.FindWithTag("PlrCam").GetComponent<Camera>();
         BloodParticles = Blood.GetComponent<bloodEmitter>();
         TrailScript = RevolverBulletLine.GetComponent<RevolverTrail>();
+        int AllLayers = Physics.AllLayers;
+        int LayerToExclude = LayerMask.GetMask("Trigger");
+        LayerMasks = AllLayers & ~LayerToExclude;
     }
     public void Fire()
     {
         Vector3 fwd = orientation.transform.TransformDirection(Vector3.forward);
         RaycastHit hitenemy;
-        if(Physics.Raycast(orientation.transform.position, orientation.transform.forward, out hitenemy))
+        if (Physics.Raycast(orientation.transform.position, orientation.transform.forward, out hitenemy, 999999999999999999f, LayerMasks))
         {
             HitPos.transform.position = hitenemy.point;
             float Distance = Vector3.Distance(orientation.transform.position, hitenemy.point);

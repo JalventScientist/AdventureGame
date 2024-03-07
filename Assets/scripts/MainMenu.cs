@@ -318,7 +318,7 @@ public class MainMenu : MonoBehaviour
             {
                 DataManager.CurrentStage = 0;
                 DataManager.CurrentLevel = 0;
-                SceneManager.LoadScene("SampleScene");
+                SceneManager.LoadScene("S0L1");
             }
         }
     }
