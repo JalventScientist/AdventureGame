@@ -34,6 +34,7 @@ public class DeathScreen : MonoBehaviour
     bool hasGoneOnce;
     [Header("Debug")]
     public KeyCode FuckingKillYourselfWith = KeyCode.Backspace;
+    public bool CanDieByKeybind;
 
     private IEnumerator Coroutine;
     IEnumerator AnimateSkull()
@@ -96,7 +97,7 @@ public class DeathScreen : MonoBehaviour
         }
         if (Input.GetKeyDown(FuckingKillYourselfWith))
         {
-            if (!ImFuckingDead)
+            if (!ImFuckingDead && CanDieByKeybind)
             {
                 ImFuckingDead = true;
                 print("Kurwa");

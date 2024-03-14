@@ -4,11 +4,12 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UIElements;
+using UnityEditor;
 
-
-public class NewBehaviourScript : MonoBehaviour
+public class TriggerEnemySpawn : MonoBehaviour
 {
     public GameObject[] PrimaryWave;
+    public bool WillTriggerGlitchOnceDead;
 
     public bool HasSecondWave;
     public GameObject[] SecondWave;
@@ -79,6 +80,10 @@ public class NewBehaviourScript : MonoBehaviour
         yield return new WaitForSeconds(DelayTime);
         SpawnWave(1);
         ArenaActive = true;
+        if (WillTriggerGlitchOnceDead)
+        {
+            GameObject.FindWithTag("musichandler").GetComponent<musicHandler>().CanGlitch = true;
+        }
     }
 
     public void SpawnWave(int WaveNumer)

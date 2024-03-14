@@ -5,6 +5,10 @@ using DG.Tweening;
 
 public class musicHandler : MonoBehaviour
 {
+    public bool CanGlitch;
+    private bool GlitchHappening;
+    public CauseGlitch GlitchEffect;
+
     [Header("Settings")]
     public float SwitchSpeedModifier;
     public float Volume = 1.0f;
@@ -54,18 +58,68 @@ public class musicHandler : MonoBehaviour
 
     private void Update()
     {
-        if (MusicStarted)
+        if (!GlitchHappening)
         {
-            if (EnemyCount > 0)
+            if (MusicStarted)
             {
-                if (ViolentSource.volume <= Volume)
+                if (EnemyCount > 0)
                 {
-                    ViolentSource.volume += Time.deltaTime * SwitchSpeedModifier;
+                    if (ViolentSource.volume <= Volume)
+                    {
+                        ViolentSource.volume += Time.deltaTime * SwitchSpeedModifier;
 
+                    }
+                    else
+                    {
+                        ViolentSource.volume = Volume;
+                    }
+                    if (NormalSource.volume > 0.2f)
+                    {
+                        NormalSource.volume -= Time.deltaTime * SwitchSpeedModifier;
+                    }
+                    else
+                    {
+                        NormalSource.volume = 0f;
+                    }
+                }
+                else // No Enemies left
+                {
+                    if (NormalSource.volume <= Volume)
+                    {
+                        NormalSource.volume += Time.deltaTime * SwitchSpeedModifier;
+
+                    }
+                    else
+                    {
+                        NormalSource.volume = Volume;
+                    }
+                    if (ViolentSource.volume > 0.2f)
+                    {
+                        ViolentSource.volume -= Time.deltaTime * SwitchSpeedModifier;
+                    }
+                    else
+                    {
+                        ViolentSource.volume = 0f;
+                    }
+                }
+                if (PreAmbienceSource.volume > 0.2f)
+                {
+                    PreAmbienceSource.volume -= Time.deltaTime * SwitchSpeedModifier;
                 }
                 else
                 {
-                    ViolentSource.volume = Volume;
+                    PreAmbienceSource.volume = 0f;
+                }
+            }
+            else
+            {
+                if (ViolentSource.volume > 0.2f)
+                {
+                    ViolentSource.volume -= Time.deltaTime * SwitchSpeedModifier;
+                }
+                else
+                {
+                    ViolentSource.volume = 0f;
                 }
                 if (NormalSource.volume > 0.2f)
                 {
@@ -75,63 +129,17 @@ public class musicHandler : MonoBehaviour
                 {
                     NormalSource.volume = 0f;
                 }
-            }
-            else // No Enemies left
-            {
-                if (NormalSource.volume <= Volume)
+                if (PreAmbienceSource.volume <= Volume)
                 {
-                    NormalSource.volume += Time.deltaTime * SwitchSpeedModifier;
+                    PreAmbienceSource.volume += Time.deltaTime * SwitchSpeedModifier;
 
                 }
                 else
                 {
-                    NormalSource.volume = Volume;
+                    PreAmbienceSource.volume = Volume;
                 }
-                if (ViolentSource.volume > 0.2f)
-                {
-                    ViolentSource.volume -= Time.deltaTime * SwitchSpeedModifier;
-                }
-                else
-                {
-                    ViolentSource.volume = 0f;
-                }
-            }
-            if (PreAmbienceSource.volume > 0.2f)
-            {
-                PreAmbienceSource.volume -= Time.deltaTime * SwitchSpeedModifier;
-            } else
-            {
-                PreAmbienceSource.volume = 0f;
-            }
-        } else
-        {
-            if (ViolentSource.volume > 0.2f)
-            {
-                ViolentSource.volume -= Time.deltaTime * SwitchSpeedModifier;
-            }
-            else
-            {
-                ViolentSource.volume = 0f;
-            }
-            if (NormalSource.volume > 0.2f)
-            {
-                NormalSource.volume -= Time.deltaTime * SwitchSpeedModifier;
-            }
-            else
-            {
-                NormalSource.volume = 0f;
-            }
-            if (PreAmbienceSource.volume <= Volume)
-            {
-                PreAmbienceSource.volume += Time.deltaTime * SwitchSpeedModifier;
-
-            }
-            else
-            {
-                PreAmbienceSource.volume = Volume;
             }
         }
-
         if (NormalSource.volume < 0.02f)
             NormalSource.mute = true;
         else
@@ -148,7 +156,6 @@ public class musicHandler : MonoBehaviour
             PreAmbienceSource.mute = true;
         else
             PreAmbienceSource.mute = false;
-
     }
 
     public void SpontaneousStart()
@@ -190,9 +197,9 @@ public class musicHandler : MonoBehaviour
         }
     }
 
-    private void ConfirmAudioSources()
+    public void SetGlitchAudio()
     {
-       
+
     }
 
     public void SetGlobalVolume(float volume)
