@@ -83,6 +83,7 @@ public class TriggerEnemySpawn : MonoBehaviour
         if (WillTriggerGlitchOnceDead)
         {
             GameObject.FindWithTag("musichandler").GetComponent<musicHandler>().CanGlitch = true;
+            GameObject.FindWithTag("Glitch").GetComponent<CauseGlitch>().CanBeTriggered = true;
         }
     }
 

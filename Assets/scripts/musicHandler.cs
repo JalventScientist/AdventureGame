@@ -156,6 +156,14 @@ public class musicHandler : MonoBehaviour
             PreAmbienceSource.mute = true;
         else
             PreAmbienceSource.mute = false;
+        if(CanGlitch && !GlitchHappening)
+        {
+            if (EnemyCount <= 0)
+            {
+                GlitchHappening = true;
+                SetGlobalVolume(0f);
+            }
+        }
     }
 
     public void SpontaneousStart()
@@ -197,18 +205,13 @@ public class musicHandler : MonoBehaviour
         }
     }
 
-    public void SetGlitchAudio()
-    {
-
-    }
-
     public void SetGlobalVolume(float volume)
     {
         for (int i = 0; i < Sources.Length; i++)
         {
             if (!Sources[i].mute)
             {
-                Sources[i].DOFade(0f, 3f).SetUpdate(true);
+                Sources[i].DOFade(volume, 3f).SetUpdate(true);
             }
         }
     }

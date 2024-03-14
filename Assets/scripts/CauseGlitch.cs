@@ -18,12 +18,16 @@ public class CauseGlitch : MonoBehaviour
     public Image GlitchEffect;
 
     [Header("References")]
-    public musicHandler moosic;
+    private musicHandler moosic;
     public PlayerCam Shaker;
     public GameObject PlayerPosition;
     public GameObject GoToPos;
+    public GameObject KarenChunk;
+    public GameObject[] UnloadChunks;
 
     private IEnumerator coroutine;
+
+    private float Intensity = 0f;
     IEnumerator ShakeText()
     {
         while (true)
@@ -38,26 +42,34 @@ public class CauseGlitch : MonoBehaviour
 
     IEnumerator StartGlitchinTfOut()
     {
+        yield return new WaitForSeconds(2f);
         StartCoroutine(coroutine);
-        ActualText.DOColor(new Color(1, 1, 1, 0.45490196078431372549019607843137f), 4f);
-        GlitchEffect.DOColor(new Color(0.45490196078431372549019607843137f, 0.45490196078431372549019607843137f, 0.45490196078431372549019607843137f, 1), 4f);
+        ActualText.DOColor(new Color(1, 1, 1, 0.1f), 3f);
+        GlitchEffect.DOColor(new Color(0.45490196078431372549019607843137f, 0.45490196078431372549019607843137f, 0.45490196078431372549019607843137f, .5f), 5f);
         ActualText.text = "THE VEILS UNRAVEL";
         yield return new WaitForSeconds(2.5f);
         ActualText.text = "PERCEPTION SHATTERS";
         yield return new WaitForSeconds(2.5f);
         GlitchEffect.DOColor(new Color(0,0,0, 1), 1f);
         ActualText.text = "REALITY AWAKENS";
+        for(int i = 0; i <UnloadChunks.Length; i++)
+        {
+            UnloadChunks[i].SetActive(false);
+        }
+        KarenChunk.SetActive(true);
         PlayerPosition.transform.position = GoToPos.transform.position;
         yield return new WaitForSeconds(2.5f);
         StopCoroutine(coroutine);
         GlitchText.SetActive(false);
         GlitchEffect.gameObject.SetActive(false);
 
+
     }
 
     private void Start()
     {
         coroutine = ShakeText();
+        moosic = GameObject.FindWithTag("musichandler").GetComponent<musicHandler>();
     }
 
     public void StartGlitching()
@@ -66,6 +78,17 @@ public class CauseGlitch : MonoBehaviour
         {
             IsTriggered = true;
             StartCoroutine(StartGlitchinTfOut());
+        }
+    }
+
+    private void Update()
+    {
+        if (CanBeTriggered)
+        {
+            if(moosic.EnemyCount <= 0)
+            {
+                StartGlitching();
+            }
         }
     }
     //0.13725490196078431372549019607843

@@ -13,6 +13,7 @@ TagManager:
   - DataManager
   - PlayerCollider
   - PlrMessageSystem
+  - Glitch
   layers:
   - Default
   - TransparentFX
