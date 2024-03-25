@@ -12,6 +12,7 @@ public class TriggerEnemySpawn : MonoBehaviour
     public bool WillTriggerGlitchOnceDead;
 
     public bool HasSecondWave;
+    private bool SecondWaveStarted = false;
     public GameObject[] SecondWave;
 
     public bool HasMessage = false;
@@ -65,11 +66,32 @@ public class TriggerEnemySpawn : MonoBehaviour
                 ActiveEntities++;
             }
 
-            if(ActiveEntities <= 0) { //Arena cleared
-                ArenaActive = false;
-                for (int i = 0; i < DoorsToLock.Length; i++)
+            if(ActiveEntities <= 0) { //Arena 1 cleared cleared
+                if (HasSecondWave)
                 {
-                    DoorsToLock[i].GetComponent<Door>().TriggerArena(false);
+                    if(!SecondWaveStarted)
+                    {
+                        SecondWaveStarted = true;
+                        SpawnWave(2);
+                    } else
+                    {
+                        if(ActiveEntities <= 0)
+                        {
+                            ArenaActive = false;
+                            for (int i = 0; i < DoorsToLock.Length; i++)
+                            {
+                                DoorsToLock[i].GetComponent<Door>().TriggerArena(false);
+                            }
+                        }
+                    }
+
+                } else
+                {
+                    ArenaActive = false;
+                    for (int i = 0; i < DoorsToLock.Length; i++)
+                    {
+                        DoorsToLock[i].GetComponent<Door>().TriggerArena(false);
+                    }
                 }
             }
         }

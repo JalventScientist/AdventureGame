@@ -172,6 +172,8 @@ public class musicHandler : MonoBehaviour
         NormalSource.Play();
         BossSource.Play();
         PreAmbienceSource.Play();
+        GlitchHappening = false;
+        CanGlitch = false;
         if (MusicStarted)
         {
             if (EnemyCount > 0)
