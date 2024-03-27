@@ -70,8 +70,12 @@ public class Spawner : MonoBehaviour
             GameObject CreatedEntity = Instantiate(AvailableEntities[EntityChoice], transform.position, transform.rotation);
             CreatedEntity.GetComponent<KarenBossStuff>().BehaviourEnabled = true;
             CreatedEntity.transform.parent = Arena;
+        } else if (EntityChoice == 2) // Heavy Robot
+        {
+            GameObject CreatedEntity = Instantiate(AvailableEntities[EntityChoice], transform.position, transform.rotation);
+            CreatedEntity.GetComponent<KarenBossStuff>().BehaviourEnabled = true;
+            CreatedEntity.transform.parent = Arena;
         }
-
         FXlight.intensity = 1f;
         MusicHandler.GetComponent<musicHandler>().EnemyCount += 1;
         var emitParams = new ParticleSystem.EmitParams();

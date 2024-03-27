@@ -38255,6 +38255,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5691418971080481127, guid: c8f9f815fa32ff744a3866aeef122073, type: 3}
+      propertyPath: EntityChoice
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5691418971080481127, guid: c8f9f815fa32ff744a3866aeef122073, type: 3}
       propertyPath: IsTutorialEnemy
       value: 1
       objectReference: {fileID: 0}
