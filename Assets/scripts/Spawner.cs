@@ -73,7 +73,7 @@ public class Spawner : MonoBehaviour
         } else if (EntityChoice == 2) // Heavy Robot
         {
             GameObject CreatedEntity = Instantiate(AvailableEntities[EntityChoice], transform.position, transform.rotation);
-            CreatedEntity.GetComponent<KarenBossStuff>().BehaviourEnabled = true;
+            CreatedEntity.GetComponent<HeavyRobotBehave>().BehaviourEnabled = true;
             CreatedEntity.transform.parent = Arena;
         }
         FXlight.intensity = 1f;

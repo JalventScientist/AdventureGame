@@ -21,13 +21,14 @@ public class HeavyRobotBehave : MonoBehaviour
     private bool SuccessfulCast;
 
     private float FireTimer;
-    public float FireTime;
+    public float FireTime = 2f;
     bool ArmExtended = false;
     bool IsExtending = false;
     bool IsRetracting = false;
     float TimePerArm = 0.625f;
     float ArmTimer;
-
+    bool CanFire = false;
+    bool IsCounting = false;
     private IEnumerator RaycastCoroutine;
     private void Start()
     {
@@ -36,7 +37,7 @@ public class HeavyRobotBehave : MonoBehaviour
         RobotAnimator = RobotPrefab.GetComponent<Animator>();
         PlayerMovement = Player.GetComponent<PlayerMovement>();
         RaycastCoroutine = CheckRayCast();
-        
+        StartCoroutine(RaycastCoroutine);
     }
 
     int LayerMasks; // I have no idea what this does but oh well
@@ -56,6 +57,7 @@ public class HeavyRobotBehave : MonoBehaviour
                         RobotAnimator.Play("Arm.AimEnd");
                     } else
                     {
+                        
                         if (ArmTimer > 0)
                             ArmTimer -= Time.deltaTime;
                         else
@@ -68,9 +70,9 @@ public class HeavyRobotBehave : MonoBehaviour
                 if (!IsRetracting && !ArmExtended)
                 {
                     RobotAgent.isStopped = false;
-                    RobotAnimator.Play("Arm.Rest");
+                    RobotAnimator.Play("Rest", 1);
                     RobotAgent.destination = Player.transform.position;
-                    RobotAnimator.Play("Base Layer.Walk");
+                    RobotAnimator.Play("Walk", 0);
                 } else
                 {
 
@@ -79,16 +81,18 @@ public class HeavyRobotBehave : MonoBehaviour
             {
                 if (!ArmExtended)
                 {
-                    RobotAnimator.Play("Base Layer.Idle");
+                    RobotAnimator.Play("Idle", 0);
                     RobotAgent.isStopped = true;
-                    RobotAnimator.Play("Arm.AimStart");
+                    RobotAnimator.Play("AimStart", 1);
                     if (!IsExtending && !ArmExtended)
                     {
                         ArmTimer = TimePerArm;
                         IsExtending = true;
                     }
-                    if (ArmTimer > 0)
+                    
+                    if (ArmTimer > 0 && IsExtending)
                     {
+                        print(ArmTimer);
                         ArmTimer -= Time.deltaTime;
                     }
                     else
@@ -99,10 +103,29 @@ public class HeavyRobotBehave : MonoBehaviour
                 }
                 if(ArmExtended)
                 {
+                    FireTimer = FireTime;
+                    IsCounting = true;
+                    if (IsCounting)
+                    {
+                        if (FireTimer > 0)
+                        {
+                            FireTimer -= Time.deltaTime;
+                        }
+                        else
+                        {
+                            FireTimer = FireTime;
+                            print("Fired");
+                        }
+                    }
 
                 }
             }
         }
+    }
+
+    IEnumerator FireCannon()
+    {
+        yield return new WaitForSeconds(0.625f);
     }
 
     IEnumerator CheckRayCast()
@@ -115,7 +138,7 @@ public class HeavyRobotBehave : MonoBehaviour
             {
                 RaycastHit hit;
                 RaycastChecker.LookAt(Player.transform);
-                if (Physics.Raycast(RaycastChecker.position, RaycastChecker.forward, out hit, 9999999999f, LayerMask.NameToLayer("Enemy")))
+                if (Physics.Raycast(RaycastChecker.position, RaycastChecker.forward, out hit, 100f, LayerMask.NameToLayer("Enemy")))
                 {
                     if (hit.collider.gameObject.tag == "PlayerCollider")
                     {
