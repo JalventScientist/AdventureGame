@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 433596044538405873}
   - component: {fileID: 6612958506631651526}
   - component: {fileID: 3100444999189083830}
-  - component: {fileID: 5462665143355190856}
   - component: {fileID: 9167402596354396169}
   - component: {fileID: 3060845389115329248}
   - component: {fileID: 7513885954125840703}
@@ -108,35 +107,8 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.5
+  m_Radius: 0.96
   m_Center: {x: 0, y: 0, z: 0}
---- !u!54 &5462665143355190856
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1658517923197008868}
-  serializedVersion: 4
-  m_Mass: 0.01
-  m_Drag: 0
-  m_AngularDrag: 0
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 1
-  m_IsKinematic: 0
-  m_Interpolate: 1
-  m_Constraints: 0
-  m_CollisionDetection: 1
 --- !u!114 &9167402596354396169
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -150,9 +122,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ExistTime: 5
+  Speed: 60
   Damage: 20
   launcher: {fileID: 0}
-  rb: {fileID: 5462665143355190856}
   Sparks: {fileID: 3060845389115329248}
   Blood: {fileID: 4672925702588286359, guid: 40c76a7510d13a94f9eb561032b0d724, type: 3}
   BloodParticles: {fileID: 3241281816926625110, guid: 40c76a7510d13a94f9eb561032b0d724, type: 3}

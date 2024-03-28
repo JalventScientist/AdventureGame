@@ -15,7 +15,7 @@ public class PauseGame : MonoBehaviour
     public Canvas MenuGUI;
 
     [Header("Check Data")]
-    public bool CanPressMenu;
+    public bool CanPressMenu = false;
 
     [Header("Other Data")]
     public GameObject[] CheckPoints;

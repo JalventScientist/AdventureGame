@@ -17,7 +17,6 @@ public class shotgunProjectile : MonoBehaviour
         for (int i = 0; i < 10; i++)
         {
             GameObject bullet = Instantiate(projectile, transform.position, transform.rotation * Quaternion.Euler(Random.Range(MinSpread, MaxSpread), Random.Range(MinSpread, MaxSpread), Random.Range(MinSpread, MaxSpread)));
-            bullet.GetComponent<Rigidbody>().AddRelativeForce(new Vector3(0, 0, launchVelocity));
         }
     }
 }

@@ -2,60 +2,50 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using UnityEngine;
+using System;
 
 public class DestroyOnCollission : MonoBehaviour
 {
     public float ExistTime = 5f;
+    public float Speed;
     private float ExpireTimer;
     public float Damage;
     private float ParticleTime = 1f;
     private float ParticleTimer;
     public shotgunProjectile launcher;
     private bool UseExpireTimer;
-    public Rigidbody rb;
     public ParticleSystem Sparks;
     public GameObject Blood;
     public bloodEmitter BloodParticles;
     private SphereCollider Collider;
     private bool CanCollide;
 
+    private int LayersToIgnore = Convert.ToInt32("11111111111111111101111111111111", 2); //LAYER 1 IS AT THE END!!!!
+
     private void Start()
     {
         ExpireTimer = ExistTime;
         UseExpireTimer = true;
         CanCollide = true;
-        rb = GetComponent<Rigidbody>();
         Sparks = GetComponent<ParticleSystem>();
         BloodParticles = Blood.GetComponent<bloodEmitter>();
         Collider = GetComponent<SphereCollider>();
     }
 
-    private void OnCollisionEnter(Collision collision)
-    {
-        if (CanCollide)
-        {
-            IfuckingHitShit(collision);
-        } else
-        {
-            return;
-        }
-    }
-
-    private void IfuckingHitShit(Collision collision)
+    private void IfuckingHitShit(GameObject collision)
     {
         CanCollide = false;
         Collider.isTrigger = true;
-        if (collision.collider.gameObject.layer == LayerMask.NameToLayer("Enemy"))
+        if (collision.gameObject.layer == LayerMask.NameToLayer("Enemy"))
         {
             GameObject THEBLOOD = Instantiate(Blood);
             THEBLOOD.GetComponent<bloodEmitter>().AttachToObject(collision.transform.position);
-            collision.gameObject.GetComponent<EnemyHealth>().health -= Damage;
-            Object.Destroy(this.gameObject);
+            collision.transform.parent.gameObject.GetComponent<EnemyHealth>().health -= Damage;
+            Destroy(this.gameObject);
         }
         else
         {
 
-            rb.constraints = RigidbodyConstraints.FreezeAll;
             ParticleTimer = ParticleTime;
             var emitParams = new ParticleSystem.EmitParams();
             UseExpireTimer = false;
@@ -63,6 +53,8 @@ public class DestroyOnCollission : MonoBehaviour
         }
 
     }
+
+    bool Collision;
     private void FixedUpdate()
     {
         if(UseExpireTimer)
@@ -73,7 +65,7 @@ public class DestroyOnCollission : MonoBehaviour
             }
             else if (ExpireTimer <= 0)
             {
-                Object.Destroy(this.gameObject);
+                Destroy(this.gameObject);
             }
         } else
         {
@@ -82,7 +74,23 @@ public class DestroyOnCollission : MonoBehaviour
                 ParticleTimer -= Time.deltaTime;
             } else if (ParticleTimer <= 0)
             {
-                Object.Destroy(this.gameObject);
+                Destroy(this.gameObject);
+            }
+        }
+        RaycastHit Hit;
+        Ray ray = new Ray(transform.position, transform.forward);
+        if(Physics.Raycast(ray,out Hit, 0.5f + Speed * Time.deltaTime, LayersToIgnore)){
+           if(!Collision)
+            {
+                Collision = true;
+                IfuckingHitShit(Hit.collider.gameObject);
+            }
+            
+        } else
+        {
+           if(!Collision)
+            {
+                transform.Translate(Vector3.forward * Speed * Time.deltaTime);
             }
         }
     }

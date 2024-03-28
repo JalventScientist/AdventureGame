@@ -8,6 +8,8 @@ public class DoorSideChecker : MonoBehaviour
     private Door DoorScript;
     public bool IsChunk1;
 
+    //Was there an easier way to do this? Probably. Do i care? No.
+
     private void Start()
     {
         DoorScript = DoorToLetCheck.GetComponent<Door>();

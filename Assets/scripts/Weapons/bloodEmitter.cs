@@ -12,12 +12,11 @@ public class bloodEmitter : MonoBehaviour
     public ParticleSystem BloodParticles;
     public AudioClip[] BloodSound;
     public GameObject BloodSounds;
-    private AudioSource SoundSource;
+    public AudioSource SoundSource;
 
     private void Start()
     {
         BloodParticles = GetComponent<ParticleSystem>();
-        SoundSource = BloodSounds.GetComponent<AudioSource>();
     }
 
     public void AttachToObject(Vector3 Position)

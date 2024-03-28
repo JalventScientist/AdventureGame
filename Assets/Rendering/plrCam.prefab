@@ -211,7 +211,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d94a1aa2241c19e4b93747a61b66630f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sensX: 0
-  sensY: 0
+  sensX: 200
+  sensY: 200
   orientation: {fileID: 0}
   camHolder: {fileID: 0}
+  UICamera: {fileID: 0}

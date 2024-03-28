@@ -12,6 +12,7 @@ public class CauseGlitch : MonoBehaviour
     private bool IsTriggered;
 
     public AudioClip ClairDeLune;
+    public AudioClip Violence;
     [Header("Required Objects")]
     public GameObject GlitchText;
     public TMP_Text ActualText;
@@ -20,6 +21,7 @@ public class CauseGlitch : MonoBehaviour
     private AudioSource Terror;
     private AudioSource tok;
     public Image Flashbang;
+    public PauseGame GamePauser;
 
     [Header("References")]
     private musicHandler moosic;
@@ -103,12 +105,13 @@ public class CauseGlitch : MonoBehaviour
         GlitchEffect.color = new Color(0f, 0f, 0f, 1f);
         yield return new WaitForSeconds(1.5f);
         GlitchEffect.DOColor(new Color(0,0,0, 0f), 1f);
+        KarenChunk.SetActive(true);
+        PlayerPosition.transform.position = GoToPos.transform.position;
         for (int i = 0; i < UnloadChunks.Length; i++)
         {
             UnloadChunks[i].SetActive(false);
+            yield return new WaitForSeconds(0.1f);
         }
-        KarenChunk.SetActive(true);
-        PlayerPosition.transform.position = GoToPos.transform.position;
         yield return new WaitForSeconds(1f);
         StopCoroutine(coroutine);
         GlitchSource.Stop();
@@ -116,8 +119,16 @@ public class CauseGlitch : MonoBehaviour
         GlitchEffect.gameObject.SetActive(false);
         foreach (Transform Source in moosic.transform)
         {
-            Source.gameObject.GetComponent<AudioSource>().clip = ClairDeLune;
+            if(Source.name == "Violent")
+            {
+                Source.gameObject.GetComponent<AudioSource>().clip = Violence;
+            } else
+            {
+                Source.gameObject.GetComponent<AudioSource>().clip = ClairDeLune;
+            }
+            
         }
+        GamePauser.CanPressMenu = false;
         moosic.SpontaneousStart();
     }
 
@@ -145,6 +156,7 @@ public class CauseGlitch : MonoBehaviour
         {
             if(moosic.EnemyCount <= 0)
             {
+                GamePauser.CanPressMenu = false;
                 StartGlitching();
             }
         }

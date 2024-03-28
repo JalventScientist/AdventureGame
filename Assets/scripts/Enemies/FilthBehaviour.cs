@@ -29,6 +29,8 @@ public class FilthBehaviour : MonoBehaviour
     public float SpeedModifier = 1f;
     public float AttackDamage;
 
+    // Unused Variables my beloved
+
     private void Start()
     {
         Player = GameObject.FindWithTag("Player");

@@ -58,6 +58,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: ea8c51e97a2172343a56e53df612daba, type: 3}
   - {fileID: 8300000, guid: 1e2240c457caa3c4590594ea2ec7b63b, type: 3}
   BloodSounds: {fileID: 6793315033801879188}
+  SoundSource: {fileID: 7201528168152464826}
 --- !u!198 &6187975039215988743
 ParticleSystem:
   m_ObjectHideFlags: 0
@@ -5115,6 +5116,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: ea8c51e97a2172343a56e53df612daba, type: 3}
   - {fileID: 8300000, guid: 1e2240c457caa3c4590594ea2ec7b63b, type: 3}
   BloodSounds: {fileID: 0}
+  SoundSource: {fileID: 0}
 --- !u!198 &1908859473205756145
 ParticleSystem:
   m_ObjectHideFlags: 0
@@ -10033,6 +10035,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: ea8c51e97a2172343a56e53df612daba, type: 3}
   - {fileID: 8300000, guid: 1e2240c457caa3c4590594ea2ec7b63b, type: 3}
   BloodSounds: {fileID: 0}
+  SoundSource: {fileID: 0}
 --- !u!198 &4255540780856171593
 ParticleSystem:
   m_ObjectHideFlags: 0
