@@ -5,6 +5,7 @@ using DG.Tweening;
 using TMPro;
 using EZCameraShake;
 using UnityEngine.UI;
+using EZCameraShake;
 
 public class CauseGlitch : MonoBehaviour
 {
@@ -61,6 +62,7 @@ public class CauseGlitch : MonoBehaviour
 
     IEnumerator StartGlitchinTfOut()
     {
+        CameraShaker.Instance.StartShake(2, 100, 1);
         Terror.Play();
         yield return new WaitForSeconds(2f);
         StartCoroutine(coroutine);
@@ -77,7 +79,7 @@ public class CauseGlitch : MonoBehaviour
                 ActualText.text = "THE VEILS UNRAVEL";
             else if (TextChoice == 2)
                 ActualText.text = "PERCEPTION SHATTERS";
-            else
+            else if (TextChoice == 3)
                 ActualText.text = "REALITY AWAKENS";
             yield return new WaitForSeconds(0.1f);
             ActualText.color = new Color(1, 1, 1, 0f);
@@ -94,7 +96,7 @@ public class CauseGlitch : MonoBehaviour
                 ActualText.text = "THE VEILS UNRAVEL";
             else if (TextChoice == 2)
                 ActualText.text = "PERCEPTION SHATTERS";
-            else
+            else if (TextChoice == 3)
                 ActualText.text = "REALITY AWAKENS";
             
             yield return new WaitForSeconds(0.05f);
@@ -117,6 +119,8 @@ public class CauseGlitch : MonoBehaviour
         GlitchSource.Stop();
         GlitchText.SetActive(false);
         GlitchEffect.gameObject.SetActive(false);
+        if(PlayerPosition.transform.position != GoToPos.transform.position)
+            PlayerPosition.transform.position = GoToPos.transform.position;
         foreach (Transform Source in moosic.transform)
         {
             if(Source.name == "Violent")

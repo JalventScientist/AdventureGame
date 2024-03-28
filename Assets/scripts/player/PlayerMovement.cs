@@ -19,6 +19,8 @@ public class PlayerMovement : MonoBehaviour
     private float desiredMoveSpeed;
     private float lastDesiredMoveSpeed;
 
+    public bool CanMove = true;
+
     public float stamina;
     public float staminaLeft;
 
@@ -89,9 +91,12 @@ public class PlayerMovement : MonoBehaviour
     private void Update()
     {
         grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.2f, whatIsGround);
-        MyInput();
-        SpeedControl();
-        StateHandler();
+        if (CanMove)
+        {
+            MyInput();
+            SpeedControl();
+            StateHandler();
+        } // All functions after this are passive checkers, they wouldn't necessarily change the movemenet speed variables
         if (grounded)
         {
             rb.drag = groundDrag;
