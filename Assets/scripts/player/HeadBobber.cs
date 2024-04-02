@@ -24,7 +24,7 @@ public class HeadBobber : MonoBehaviour
 
     private void Update()
     {
-        if(Plr.IswalkingOnGround || Plr.wallrunning)
+        if(Plr.IswalkingOnGround || Plr.wallrunning && Plr.CanMove)
         {
             timer += Time.deltaTime * walkingBobbingSpeed;
             transform.localPosition = new Vector3(transform.localPosition.x, defaultPosY + Mathf.Sin(timer) * bobbingAmount, transform.localPosition.z);

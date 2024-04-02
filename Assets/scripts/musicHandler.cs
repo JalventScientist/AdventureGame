@@ -6,7 +6,7 @@ using DG.Tweening;
 public class musicHandler : MonoBehaviour
 {
     public bool CanGlitch;
-    private bool GlitchHappening;
+    public bool GlitchHappening;
     public CauseGlitch GlitchEffect;
 
     [Header("Settings")]
@@ -15,6 +15,7 @@ public class musicHandler : MonoBehaviour
     public float EnemyCount;
     public bool MusicStarted = false;
     public bool IsBoss;
+    public bool FreezeState = false;
     [Header("References")]
     public GameObject NormalMusic;
     public GameObject ViolentMusic;
@@ -22,7 +23,7 @@ public class musicHandler : MonoBehaviour
     public GameObject PreAmbienceMusic;
 
     private AudioSource NormalSource;
-    private AudioSource ViolentSource;
+    public AudioSource ViolentSource;
     private AudioSource BossSource;
     private AudioSource PreAmbienceSource;
 
@@ -58,7 +59,9 @@ public class musicHandler : MonoBehaviour
 
     private void Update()
     {
-        if (!GlitchHappening)
+        if(!FreezeState)
+        {
+            if (!GlitchHappening)
         {
             if (MusicStarted)
             {
@@ -156,13 +159,6 @@ public class musicHandler : MonoBehaviour
             PreAmbienceSource.mute = true;
         else
             PreAmbienceSource.mute = false;
-        if(CanGlitch && !GlitchHappening)
-        {
-            if (EnemyCount <= 0)
-            {
-                GlitchHappening = true;
-                SetGlobalVolume(0f);
-            }
         }
     }
 

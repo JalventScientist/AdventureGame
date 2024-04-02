@@ -732,6 +732,7 @@ MonoBehaviour:
   rb: {fileID: 0}
   PlrScript: {fileID: 0}
   FuckingKillYourselfWith: 8
+  CanDieByKeybind: 0
 --- !u!82 &6380234395715327590
 AudioSource:
   m_ObjectHideFlags: 0

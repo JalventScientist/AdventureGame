@@ -91,9 +91,10 @@ public class PlayerMovement : MonoBehaviour
     private void Update()
     {
         grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.2f, whatIsGround);
+        MyInput();
         if (CanMove)
         {
-            MyInput();
+            
             SpeedControl();
             StateHandler();
         } // All functions after this are passive checkers, they wouldn't necessarily change the movemenet speed variables
@@ -122,7 +123,10 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        MovePlayer();
+        if (CanMove)
+        {
+            MovePlayer();
+        }
          if(hozInput != 0 || vertInput != 0)
         {
             if(grounded)
@@ -140,35 +144,45 @@ public class PlayerMovement : MonoBehaviour
     }
     private void MyInput()
     {
-        hozInput = Input.GetAxisRaw("Horizontal");
-        vertInput = Input.GetAxisRaw("Vertical");
+        if (CanMove)
+        {
+            hozInput = Input.GetAxisRaw("Horizontal");
+            vertInput = Input.GetAxisRaw("Vertical");
 
-        if(Input.GetKey(jumpKey) && readyToJump && grounded)
+            if (Input.GetKey(jumpKey) && readyToJump && grounded)
+            {
+                readyToJump = false;
+                Jump();
+                Invoke(nameof(ResetJump), jumpCooldown);
+            }
+            if (Input.GetKeyDown(crouchKey) && grounded)
+            {
+                transform.localScale = new Vector3(transform.localScale.x, crouchYScale, transform.localScale.z);
+                rb.AddForce(Vector3.down * 5f, ForceMode.Impulse);
+            }
+            if (Input.GetKeyUp(crouchKey) || Input.GetKey(jumpKey))
+            {
+                transform.localScale = new Vector3(transform.localScale.x, startYScale, transform.localScale.z);
+            }
+            if (Input.GetKeyDown(sprintKey) && staminaLeft > 0)
+            {
+                moveSpeed = sprintspeed;
+                isSprinting = true;
+                plrCam.DoFov(70, 0.9f);
+            }
+            if (Input.GetKeyUp(sprintKey) || staminaLeft <= 0)
+            {
+                moveSpeed = requiredMoveSpeed;
+                isSprinting = false;
+                plrCam.DoFov(60, 1f);
+            }
+        } else
         {
-            readyToJump = false;
-            Jump();
-            Invoke(nameof(ResetJump), jumpCooldown);
-        }
-        if(Input.GetKeyDown(crouchKey) && grounded)
-        {
-            transform.localScale = new Vector3(transform.localScale.x, crouchYScale, transform.localScale.z);
-            rb.AddForce(Vector3.down * 5f, ForceMode.Impulse);
-        }
-        if (Input.GetKeyUp(crouchKey) || Input.GetKey(jumpKey))
-        {
-            transform.localScale = new Vector3(transform.localScale.x, startYScale, transform.localScale.z);
-        }
-        if (Input.GetKeyDown(sprintKey) && staminaLeft > 0)
-        {
-            moveSpeed = sprintspeed;
-            isSprinting = true;
-            plrCam.DoFov(70, 0.9f);
-        }
-        if(Input.GetKeyUp(sprintKey) || staminaLeft <= 0)
-        {
-            moveSpeed = requiredMoveSpeed;
-            isSprinting = false;
-            plrCam.DoFov(60, 1f);
+            if(isSprinting) {
+                plrCam.DoFov(60, 1f);
+                moveSpeed = requiredMoveSpeed;
+                isSprinting = false;
+            }
         }
     }
     private void StateHandler()

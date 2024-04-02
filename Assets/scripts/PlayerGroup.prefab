@@ -480,6 +480,7 @@ MonoBehaviour:
   slideSpeed: 17
   WallRunSpeed: 15
   forceMode: 0
+  CanMove: 1
   stamina: 5
   staminaLeft: 0
   jumpForce: 15

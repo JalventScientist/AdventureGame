@@ -3,6 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using EZCameraShake;
+using UnityEngine.Rendering.Universal;
+using UnityEngine.Rendering;
+using DG.Tweening;
+using Unity.VisualScripting;
+using TMPro;
 
 public class PostKarenGlitch : MonoBehaviour
 {
@@ -12,6 +17,7 @@ public class PostKarenGlitch : MonoBehaviour
     public GameObject TheSkeleton; // Area with the skeleton
     public GameObject LandscapeOfThorns;
     public GameObject NewChunk; // Where the player Ends
+    
 
     [Header("Other Dependencies")]
     public GameObject Player;
@@ -20,7 +26,31 @@ public class PostKarenGlitch : MonoBehaviour
     public musicHandler Music;
     public AudioSource GlitchSound;
     public AudioClip Noise;
+    public Image Blackout;
     private PlayerMovement PlayerMovement;
+    public Transform GoToPos1;
+    private AudioSource LeGlitchAudio;
+    public Camera PlayerCamera; // Used to get the script that intensifies the camera effects based on where its looking
+    public Transform TargetPoint;
+    public AudioClip SnapBack;
+    public AudioClip OtherSnap;
+    public AudioSource SecondSnapAudio;
+    public RawImage SnapBackToReality;
+
+    private PlayerCam PlayerCam;
+
+    private AudioSource HOLDONTOME;
+
+    float MinValue = 0f;
+    float MaxValue = 1f;
+
+    bool DoDynamicIntensity = false;
+
+    [Header("Post Process Adjustments")]
+    public Volume Profile;
+    private ChromaticAberration CA;
+    private ColorAdjustments ColorAdjustments;
+    private SplitToning ST;
 
     [Header("Other Variables")]
     public bool CanBeTriggered = false;
@@ -30,23 +60,101 @@ public class PostKarenGlitch : MonoBehaviour
     private float DebounceTimer;
     private bool Activated = false;
 
-    //0:57 :>
+    private float RequiredLookTime = 2f;
+    private float LookTimer;
 
+    private void Start()
+    {
+        Profile.profile.TryGet<ChromaticAberration>(out CA);
+        Profile.profile.TryGet<ColorAdjustments>(out ColorAdjustments);
+        Profile.profile.TryGet<SplitToning>(out ST);
+        SnapBack.LoadAudioData();
+        JUSTASINGLEPULL.LoadAudioData();
+        OtherSnap.LoadAudioData();
+        HOLDONTOME = GetComponent<AudioSource>();
+        PlayerCam = PlayerCamera.GetComponent<PlayerCam>();
+    }
     IEnumerator StartSecondGlitch()
     {
+        SecondSnapAudio.gameObject.GetComponent<TMP_Text>().text = "";
+        SecondSnapAudio.gameObject.SetActive(true);
+        GlitchSound.clip = Noise;
         GlitchEffect.gameObject.SetActive(true);
-        CameraShaker.Instance.StartShake(2, 100, 1);
+        var lmao = CameraShaker.Instance.StartShake(0.2f, 100, 3);
         GameObject.FindWithTag("Player").GetComponent<PlayerMovement>().CanMove = false;
         yield return new WaitForSeconds(Random.Range(1.001f, 1.701f));
         GlitchEffect.color = new Color(1, 1, 1, 1);
+        GlitchSound.Play();
         yield return new WaitForSeconds(0.1f);
+        GlitchSound.Pause();
         GlitchEffect.color = new Color(1, 1, 1, 0);
         yield return new WaitForSeconds(Random.Range(.751f, 1.001f));
         GlitchEffect.color = new Color(1, 1, 1, 1);
         GoryKarenChunk.SetActive(true);
+        GlitchSound.Play();
         yield return new WaitForSeconds(0.1f);
+        GlitchSound.Stop();
+        GlitchSound.clip = OtherSnap;
+        SecondSnapAudio.clip = SnapBack;
         GlitchEffect.color = new Color(1, 1, 1, 0);
-        yield return new WaitForSeconds(Random.Range(.251f, .751f));
+        float wait = Random.Range(.251f, .751f);
+        lmao = CameraShaker.Instance.StartShake(2f, 100, wait);
+        DOTween.To(() => CA.intensity.value, x => CA.intensity.value = x, 1, wait);
+        yield return new WaitForSeconds(wait);
+        ColorAdjustments.active = true;
+        yield return new WaitForSeconds(0.1f);
+        GlitchSound.Play();
+        PlayerCam.CameraEnabled = false;
+        PlayerCam.SetOrientation(0, -90, 0);
+        Blackout.color = new Color(0, 0, 0, 1f);
+        yield return new WaitForSeconds(0.1f);
+        TheSkeleton.SetActive(true);
+        Player.transform.position = GoToPos1.position;
+        CA.intensity.value = 0f;
+        yield return new WaitForSeconds(1f);
+        SecondSnapAudio.Play();
+        ColorAdjustments.active = false;
+        PlayerCam.CameraEnabled = true;
+        Blackout.color = new Color(0, 0, 0, 0f);
+        DoDynamicIntensity = true;
+        HOLDONTOME.Play();
+        while (DoDynamicIntensity)
+        {
+            lmao = CameraShaker.Instance.StartShake( 0.3f + ((LookTimer * 2) - 0.3f), 100, 0.01f);
+            yield return new WaitForSeconds(0.01f);
+            if (!DoDynamicIntensity)
+            {
+                lmao.StartFadeOut(0f);
+                yield break;
+            }
+        }
+        
+    }
+
+    public AudioClip JUSTASINGLEPULL;
+    IEnumerator Glitchpart2()
+    {
+        var Chance = Random.Range(1, 10);
+        HOLDONTOME.Stop();
+        var lmao = CameraShaker.Instance.StartShake(3f, 100, 0.01f);
+        HOLDONTOME.clip = JUSTASINGLEPULL;
+        GlitchSound.Play();
+        PlayerCam.CameraEnabled = false;
+        Blackout.color = new Color(0, 0, 0, 1f);
+        LandscapeOfThorns.SetActive(true);
+        yield return new WaitForSeconds(0.1f);
+        HOLDONTOME.Play();
+        SecondSnapAudio.Play();
+        if (Chance == 1)
+            SnapBackToReality.color = new Color(.1f, .1f, .1f, 1f);
+        else
+            Blackout.color = new Color(0, 0, 0, 0f);
+        yield return new WaitForSeconds(0.5f);
+        lmao.StartFadeOut(0f);
+        HOLDONTOME.Stop();
+        GlitchSound.Play();
+        Blackout.color = new Color(0, 0, 0, 1f);
+        LandscapeOfThorns.SetActive(false);
     }
 
     private void Update()
@@ -61,6 +169,7 @@ public class PostKarenGlitch : MonoBehaviour
                 {
                     if (!HasDoneFirstWave)
                     {
+                        Music.CanGlitch = false;
                         HasDoneFirstWave = true;
                         DebounceTimer = 0.5f;
                         print("FirstWave Done");
@@ -69,6 +178,7 @@ public class PostKarenGlitch : MonoBehaviour
                         DebounceTimer = 0.5f;
                     } else
                     {
+                        Music.SetGlobalVolume(0);
                         if (!Activated)
                         {
                             Activated = true;
@@ -78,6 +188,26 @@ public class PostKarenGlitch : MonoBehaviour
                 }
             }
         }
-
+        if(DoDynamicIntensity)
+        {
+            Vector3 TargetVector = PlayerCamera.transform.position -  TargetPoint.position;
+            float angle = Vector3.Angle(PlayerCamera.transform.forward, TargetVector);
+            float NormalizedAngle = (angle + 360f) % 360f;
+            float MappedValue = Mathf.Lerp(MinValue, MaxValue, NormalizedAngle / 360f) * 2;
+            HOLDONTOME.volume = MappedValue;
+            //MappedValue = variable to change intensity over rotation
+            CA.intensity.value = MappedValue;
+            if (MappedValue >= 0.93f)
+            {
+                if(LookTimer <= RequiredLookTime)
+                {
+                    DoDynamicIntensity = false;
+                    StartCoroutine(Glitchpart2());
+                } else
+                {
+                    LookTimer += Time.deltaTime;
+                }
+            }
+        }
     }
 }

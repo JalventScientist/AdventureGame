@@ -51,6 +51,10 @@ public class PauseGame : MonoBehaviour
             if (Input.GetKeyUp(PauseKey))
                 HasPressedMenu = false;
         }
+        if (!MenuIsActive)
+            Cursor.lockState = CursorLockMode.Locked;
+        else
+            Cursor.lockState = CursorLockMode.Confined;
     }
     public void TriggerPause(bool toggle)
     {

@@ -560,12 +560,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5459ce54003364d438817a1c9d4b9f32, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  CanGlitch: 0
+  GlitchHappening: 0
+  GlitchEffect: {fileID: 0}
   SwitchSpeedModifier: 0.21
   Volume: 0.6
   EnemyCount: 0
   MusicStarted: 0
   IsBoss: 0
+  FreezeState: 0
   NormalMusic: {fileID: 674596982885520219}
   ViolentMusic: {fileID: 94064196590195982}
   BossMusic: {fileID: 6378403989743291492}
   PreAmbienceMusic: {fileID: 4923325577414620370}
+  ViolentSource: {fileID: 0}

@@ -5,7 +5,7 @@ using DG.Tweening;
 using TMPro;
 using EZCameraShake;
 using UnityEngine.UI;
-using EZCameraShake;
+using System.Threading.Tasks;
 
 public class CauseGlitch : MonoBehaviour
 {
@@ -62,7 +62,7 @@ public class CauseGlitch : MonoBehaviour
 
     IEnumerator StartGlitchinTfOut()
     {
-        CameraShaker.Instance.StartShake(2, 100, 1);
+        var LeShaka = CameraShaker.Instance.StartShake(2, 100, 3);
         Terror.Play();
         yield return new WaitForSeconds(2f);
         StartCoroutine(coroutine);
@@ -91,7 +91,7 @@ public class CauseGlitch : MonoBehaviour
         GlitchEffect.DOColor(new Color(0.45490196078431372549019607843137f, 0.45490196078431372549019607843137f, 0.45490196078431372549019607843137f, 1f), 1f);
         ActualText.color = new Color(1, 1, 1, 1f);
         for (int i = 0; i < 30;i++) {
-            int TextChoice = Random.Range(1, 3);
+            int TextChoice = Random.Range(1, 4);
             if (TextChoice == 1)
                 ActualText.text = "THE VEILS UNRAVEL";
             else if (TextChoice == 2)
@@ -101,39 +101,57 @@ public class CauseGlitch : MonoBehaviour
             
             yield return new WaitForSeconds(0.05f);
         }
+        GameObject.FindWithTag("Player").GetComponent<PlayerMovement>().CanMove = false;
         Terror.Stop();
         tok.Play();
+        StopCoroutine(coroutine);
         ActualText.color = new Color(0, 0, 0, 0f);
         GlitchEffect.color = new Color(0f, 0f, 0f, 1f);
         yield return new WaitForSeconds(1.5f);
         GlitchEffect.DOColor(new Color(0,0,0, 0f), 1f);
         KarenChunk.SetActive(true);
+        LeShaka.StartFadeOut(0);
+        StartCoroutine(ReloadAudios());
+        yield return new WaitForSeconds(0.1f);
         PlayerPosition.transform.position = GoToPos.transform.position;
-        for (int i = 0; i < UnloadChunks.Length; i++)
-        {
-            UnloadChunks[i].SetActive(false);
-            yield return new WaitForSeconds(0.1f);
-        }
-        yield return new WaitForSeconds(1f);
-        StopCoroutine(coroutine);
+        StartCoroutine(UnloadScenes());
+        yield return new WaitForSeconds(.1f);
+        PlayerPosition.transform.position = GoToPos.transform.position;
+        yield return new WaitForSeconds(.9f);
+        
         GlitchSource.Stop();
         GlitchText.SetActive(false);
         GlitchEffect.gameObject.SetActive(false);
-        if(PlayerPosition.transform.position != GoToPos.transform.position)
-            PlayerPosition.transform.position = GoToPos.transform.position;
+        GamePauser.CanPressMenu = true;
+        moosic.SpontaneousStart();
+        GameObject.FindWithTag("Player").GetComponent<PlayerMovement>().CanMove = true;
+        moosic.CanGlitch = false;
+    }
+
+    IEnumerator ReloadAudios()
+    {
         foreach (Transform Source in moosic.transform)
         {
-            if(Source.name == "Violent")
+            if (Source.name == "Violent")
             {
                 Source.gameObject.GetComponent<AudioSource>().clip = Violence;
-            } else
+            }
+            else
             {
                 Source.gameObject.GetComponent<AudioSource>().clip = ClairDeLune;
             }
-            
+
         }
-        GamePauser.CanPressMenu = false;
-        moosic.SpontaneousStart();
+        yield return new WaitForSeconds(0.5f);
+    }
+    IEnumerator UnloadScenes()
+    {
+        for (int i = 0; i < UnloadChunks.Length; i++)
+        {
+            UnloadChunks[i].SetActive(false);
+            yield return new WaitForSeconds(.1f);
+        }
+
     }
 
     private void Start()
@@ -143,6 +161,8 @@ public class CauseGlitch : MonoBehaviour
         GlitchSource = GetComponent<AudioSource>();
         Terror = GlitchText.gameObject.GetComponent<AudioSource>();
         tok = Flashbang.gameObject.GetComponent<AudioSource>();
+        ClairDeLune.LoadAudioData();
+        Violence.LoadAudioData();
     }
 
     public void StartGlitching()
@@ -153,15 +173,23 @@ public class CauseGlitch : MonoBehaviour
             StartCoroutine(StartGlitchinTfOut());
         }
     }
+    bool AlreadyTriggered = false;
 
     private void Update()
     {
-        if (CanBeTriggered)
+        if(!AlreadyTriggered)
         {
-            if(moosic.EnemyCount <= 0)
+            if (CanBeTriggered)
             {
-                GamePauser.CanPressMenu = false;
-                StartGlitching();
+                if (moosic.EnemyCount <= 0 && moosic.CanGlitch)
+                {
+                    AlreadyTriggered = true;
+                    GamePauser.CanPressMenu = false;
+                    moosic.GlitchHappening = true;
+                    print("Triggered");
+                    moosic.SetGlobalVolume(0f);
+                    StartGlitching();
+                }
             }
         }
     }

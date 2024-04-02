@@ -26,12 +26,14 @@ public class TriggerEnemySpawn : MonoBehaviour
 
     public int ActiveEntities;
     public Transform ArenaObject;
+    private musicHandler musicHandler;
 
     bool Triggered;
 
     private void Start()
     {
         PlrMessage = GameObject.FindWithTag("PlrMessageSystem").GetComponent<PlayerMessage>();
+        musicHandler = GameObject.FindWithTag("musichandler").GetComponent<musicHandler>();
     }
 
     private void OnTriggerEnter(Collider Collission)
