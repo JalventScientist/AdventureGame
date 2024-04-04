@@ -17,7 +17,13 @@ public class PostKarenGlitch : MonoBehaviour
     public GameObject TheSkeleton; // Area with the skeleton
     public GameObject LandscapeOfThorns;
     public GameObject NewChunk; // Where the player Ends
-    
+
+    public AudioClip Calm;
+    public AudioClip Violent;
+
+    public AudioSource PeacefulAudio;
+    public AudioSource ViolentAudio;
+
 
     [Header("Other Dependencies")]
     public GameObject Player;
@@ -36,6 +42,7 @@ public class PostKarenGlitch : MonoBehaviour
     public AudioClip OtherSnap;
     public AudioSource SecondSnapAudio;
     public RawImage SnapBackToReality;
+    public Transform ReturnPosition;
 
     private PlayerCam PlayerCam;
 
@@ -63,6 +70,8 @@ public class PostKarenGlitch : MonoBehaviour
     private float RequiredLookTime = 2f;
     private float LookTimer;
 
+    private CameraShakeInstance lmao;
+
     private void Start()
     {
         Profile.profile.TryGet<ChromaticAberration>(out CA);
@@ -73,6 +82,7 @@ public class PostKarenGlitch : MonoBehaviour
         OtherSnap.LoadAudioData();
         HOLDONTOME = GetComponent<AudioSource>();
         PlayerCam = PlayerCamera.GetComponent<PlayerCam>();
+        PlayerMovement = Player.GetComponent<PlayerMovement>();
     }
     IEnumerator StartSecondGlitch()
     {
@@ -80,8 +90,9 @@ public class PostKarenGlitch : MonoBehaviour
         SecondSnapAudio.gameObject.SetActive(true);
         GlitchSound.clip = Noise;
         GlitchEffect.gameObject.SetActive(true);
-        var lmao = CameraShaker.Instance.StartShake(0.2f, 100, 3);
-        GameObject.FindWithTag("Player").GetComponent<PlayerMovement>().CanMove = false;
+        lmao = CameraShaker.Instance.StartShake(0.2f, 100, 3);
+        lmao.DeleteOnInactive = false;
+        PlayerMovement.CanMove = false;
         yield return new WaitForSeconds(Random.Range(1.001f, 1.701f));
         GlitchEffect.color = new Color(1, 1, 1, 1);
         GlitchSound.Play();
@@ -98,7 +109,7 @@ public class PostKarenGlitch : MonoBehaviour
         SecondSnapAudio.clip = SnapBack;
         GlitchEffect.color = new Color(1, 1, 1, 0);
         float wait = Random.Range(.251f, .751f);
-        lmao = CameraShaker.Instance.StartShake(2f, 100, wait);
+        lmao.Magnitude = 2;
         DOTween.To(() => CA.intensity.value, x => CA.intensity.value = x, 1, wait);
         yield return new WaitForSeconds(wait);
         ColorAdjustments.active = true;
@@ -108,6 +119,7 @@ public class PostKarenGlitch : MonoBehaviour
         PlayerCam.SetOrientation(0, -90, 0);
         Blackout.color = new Color(0, 0, 0, 1f);
         yield return new WaitForSeconds(0.1f);
+        GoryKarenChunk.SetActive(false);
         TheSkeleton.SetActive(true);
         Player.transform.position = GoToPos1.position;
         CA.intensity.value = 0f;
@@ -118,16 +130,6 @@ public class PostKarenGlitch : MonoBehaviour
         Blackout.color = new Color(0, 0, 0, 0f);
         DoDynamicIntensity = true;
         HOLDONTOME.Play();
-        while (DoDynamicIntensity)
-        {
-            lmao = CameraShaker.Instance.StartShake( 0.3f + ((LookTimer * 2) - 0.3f), 100, 0.01f);
-            yield return new WaitForSeconds(0.01f);
-            if (!DoDynamicIntensity)
-            {
-                lmao.StartFadeOut(0f);
-                yield break;
-            }
-        }
         
     }
 
@@ -136,25 +138,43 @@ public class PostKarenGlitch : MonoBehaviour
     {
         var Chance = Random.Range(1, 10);
         HOLDONTOME.Stop();
-        var lmao = CameraShaker.Instance.StartShake(3f, 100, 0.01f);
+        lmao.Magnitude = 3f;
         HOLDONTOME.clip = JUSTASINGLEPULL;
         GlitchSound.Play();
         PlayerCam.CameraEnabled = false;
-        Blackout.color = new Color(0, 0, 0, 1f);
-        LandscapeOfThorns.SetActive(true);
-        yield return new WaitForSeconds(0.1f);
-        HOLDONTOME.Play();
-        SecondSnapAudio.Play();
         if (Chance == 1)
             SnapBackToReality.color = new Color(.1f, .1f, .1f, 1f);
         else
+            Blackout.color = new Color(0, 0, 0, 1f);
+        LandscapeOfThorns.SetActive(true);
+        yield return new WaitForSeconds(0.4f);
+        HOLDONTOME.Play();
+        SecondSnapAudio.Play();
+        if (Chance == 1)
+            SnapBackToReality.color = new Color(.1f, .1f, .1f, 0f);
+        else
             Blackout.color = new Color(0, 0, 0, 0f);
         yield return new WaitForSeconds(0.5f);
-        lmao.StartFadeOut(0f);
+        lmao.Magnitude = 0;
         HOLDONTOME.Stop();
         GlitchSound.Play();
         Blackout.color = new Color(0, 0, 0, 1f);
         LandscapeOfThorns.SetActive(false);
+        NewChunk.SetActive(true);
+        yield return new WaitForSeconds(0.2f);
+        CA.active = false;
+        ColorAdjustments.active = false;
+        ViolentAudio.clip = Violent;
+        PeacefulAudio.clip = Calm;
+        Player.transform.position = ReturnPosition.position;
+        yield return new WaitForSeconds(0.2f);
+        TheSkeleton.SetActive(false);
+        yield return new WaitForSeconds(0.6f);
+        SecondSnapAudio.Play();
+        PlayerMovement.CanMove = true;
+        PlayerCam.CameraEnabled = true;
+        Blackout.color = new Color(0, 0, 0, 0);
+        Music.SpontaneousStart();
     }
 
     private void Update()
@@ -172,15 +192,15 @@ public class PostKarenGlitch : MonoBehaviour
                         Music.CanGlitch = false;
                         HasDoneFirstWave = true;
                         DebounceTimer = 0.5f;
-                        print("FirstWave Done");
                     } else if(HasDoneFirstWave && !HasDoneSecondWave) {
                         HasDoneSecondWave = true;
                         DebounceTimer = 0.5f;
                     } else
                     {
-                        Music.SetGlobalVolume(0);
+                        
                         if (!Activated)
                         {
+                            Music.SetGlobalVolume(0);
                             Activated = true;
                             StartCoroutine(StartSecondGlitch());
                         }
@@ -197,6 +217,7 @@ public class PostKarenGlitch : MonoBehaviour
             HOLDONTOME.volume = MappedValue;
             //MappedValue = variable to change intensity over rotation
             CA.intensity.value = MappedValue;
+            lmao.Magnitude = 0.3f + ((LookTimer * 2) - 0.3f);
             if (MappedValue >= 0.93f)
             {
                 if(LookTimer <= RequiredLookTime)

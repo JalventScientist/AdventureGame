@@ -100,7 +100,6 @@ public class DeathScreen : MonoBehaviour
             if (!ImFuckingDead && CanDieByKeybind)
             {
                 ImFuckingDead = true;
-                print("Kurwa");
                 PlayerHealth.DamagePlayer(100);
             }
             

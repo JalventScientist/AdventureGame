@@ -186,7 +186,6 @@ public class CauseGlitch : MonoBehaviour
                     AlreadyTriggered = true;
                     GamePauser.CanPressMenu = false;
                     moosic.GlitchHappening = true;
-                    print("Triggered");
                     moosic.SetGlobalVolume(0f);
                     StartGlitching();
                 }
