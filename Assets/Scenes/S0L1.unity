@@ -1916,7 +1916,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &87822102
 Transform:
   m_ObjectHideFlags: 0
@@ -1930,6 +1930,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 719092568}
+  - {fileID: 449975093}
   - {fileID: 1375551067}
   - {fileID: 437883726}
   - {fileID: 2014851620}
@@ -3390,8 +3392,6 @@ Transform:
   - {fileID: 1564989491}
   - {fileID: 2138679840}
   - {fileID: 1384333140}
-  - {fileID: 449975093}
-  - {fileID: 719092568}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &170524889
@@ -13593,11 +13593,11 @@ Transform:
   m_GameObject: {fileID: 449975092}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: 1, w: 0.0000029504295}
-  m_LocalPosition: {x: 43.06723, y: 21.448814, z: 48.761703}
+  m_LocalPosition: {x: 57.13668, y: 39.268726, z: -10.06073}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 169614103}
+  m_Father: {fileID: 87822102}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 180}
 --- !u!64 &449975094
 MeshCollider:
@@ -14522,7 +14522,7 @@ Light:
   m_Type: 0
   m_Shape: 0
   m_Color: {r: 0.8962264, g: 0.738084, b: 0.40161088, a: 1}
-  m_Intensity: 28
+  m_Intensity: 100.86
   m_Range: 25.85
   m_SpotAngle: 160.61792
   m_InnerSpotAngle: 72.44988
@@ -18674,7 +18674,7 @@ Light:
   m_Type: 0
   m_Shape: 0
   m_Color: {r: 0.8962264, g: 0.738084, b: 0.40161088, a: 1}
-  m_Intensity: 28
+  m_Intensity: 100.86
   m_Range: 25.85
   m_SpotAngle: 160.61792
   m_InnerSpotAngle: 72.44988
@@ -24517,7 +24517,7 @@ Light:
   m_Type: 0
   m_Shape: 0
   m_Color: {r: 0.8962264, g: 0.738084, b: 0.40161088, a: 1}
-  m_Intensity: 28
+  m_Intensity: 100.86
   m_Range: 25.85
   m_SpotAngle: 160.61792
   m_InnerSpotAngle: 72.44988
@@ -26749,11 +26749,11 @@ Transform:
   m_GameObject: {fileID: 719092567}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: 1, w: 0.0000029504295}
-  m_LocalPosition: {x: 43.06723, y: 21.448814, z: 81.0117}
+  m_LocalPosition: {x: 57.13668, y: 39.268726, z: 22.18927}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 169614103}
+  m_Father: {fileID: 87822102}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 180}
 --- !u!64 &719092569
 MeshCollider:
@@ -33737,7 +33737,7 @@ Light:
   m_Type: 0
   m_Shape: 0
   m_Color: {r: 0.8962264, g: 0.738084, b: 0.40161088, a: 1}
-  m_Intensity: 28
+  m_Intensity: 100.86
   m_Range: 25.85
   m_SpotAngle: 160.61792
   m_InnerSpotAngle: 72.44988
@@ -34719,7 +34719,7 @@ Light:
   m_Type: 0
   m_Shape: 0
   m_Color: {r: 0.8962264, g: 0.738084, b: 0.40161088, a: 1}
-  m_Intensity: 28
+  m_Intensity: 100.86
   m_Range: 25.85
   m_SpotAngle: 160.61792
   m_InnerSpotAngle: 72.44988
@@ -35261,7 +35261,7 @@ Light:
   m_Type: 0
   m_Shape: 0
   m_Color: {r: 0.8962264, g: 0.738084, b: 0.40161088, a: 1}
-  m_Intensity: 28
+  m_Intensity: 100.86
   m_Range: 25.85
   m_SpotAngle: 160.61792
   m_InnerSpotAngle: 72.44988
@@ -51534,14 +51534,14 @@ PrefabInstance:
     - target: {fileID: 5294165508188194899, guid: 47b9cface2ae2de4da1dadd107f63f68, type: 3}
       propertyPath: Chunk1
       value: 
-      objectReference: {fileID: 169614102}
+      objectReference: {fileID: 87822101}
     - target: {fileID: 5294165508188194899, guid: 47b9cface2ae2de4da1dadd107f63f68, type: 3}
       propertyPath: Chunk2
       value: 
       objectReference: {fileID: 1275135645}
     - target: {fileID: 5294165508188194899, guid: 47b9cface2ae2de4da1dadd107f63f68, type: 3}
       propertyPath: LockDoorsOnArena
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7619677650170947579, guid: 47b9cface2ae2de4da1dadd107f63f68, type: 3}
       propertyPath: m_Mesh
@@ -52053,8 +52053,12 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 87822101}
     - target: {fileID: 5294165508188194899, guid: 47b9cface2ae2de4da1dadd107f63f68, type: 3}
+      propertyPath: DoorAnimator
+      value: 
+      objectReference: {fileID: 1523243362}
+    - target: {fileID: 5294165508188194899, guid: 47b9cface2ae2de4da1dadd107f63f68, type: 3}
       propertyPath: LockDoorsOnArena
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5296095213056567139, guid: 47b9cface2ae2de4da1dadd107f63f68, type: 3}
       propertyPath: m_Layer
@@ -52908,6 +52912,11 @@ GameObject:
 Transform:
   m_CorrespondingSourceObject: {fileID: 5346698268179680460, guid: c8f9f815fa32ff744a3866aeef122073, type: 3}
   m_PrefabInstance: {fileID: 754661648}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &1523243362 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 1460390759730064359, guid: 47b9cface2ae2de4da1dadd107f63f68, type: 3}
+  m_PrefabInstance: {fileID: 1507634696}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1523950192
 PrefabInstance:
@@ -70924,7 +70933,7 @@ Light:
   m_Type: 0
   m_Shape: 0
   m_Color: {r: 0.8962264, g: 0.738084, b: 0.40161088, a: 1}
-  m_Intensity: 28
+  m_Intensity: 100.86
   m_Range: 25.85
   m_SpotAngle: 160.61792
   m_InnerSpotAngle: 72.44988
@@ -75650,7 +75659,7 @@ Light:
   m_Type: 0
   m_Shape: 0
   m_Color: {r: 0.8962264, g: 0.738084, b: 0.40161088, a: 1}
-  m_Intensity: 28
+  m_Intensity: 100.86
   m_Range: 25.85
   m_SpotAngle: 160.61792
   m_InnerSpotAngle: 72.44988

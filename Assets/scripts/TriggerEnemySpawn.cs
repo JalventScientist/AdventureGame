@@ -103,6 +103,7 @@ public class TriggerEnemySpawn : MonoBehaviour
     {
         yield return new WaitForSeconds(DelayTime);
         SpawnWave(1);
+        yield return new WaitForSeconds(0.1f);
         ArenaActive = true;
         if (WillTriggerGlitchOnceDead)
         {

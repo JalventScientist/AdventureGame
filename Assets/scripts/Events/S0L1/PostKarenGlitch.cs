@@ -130,7 +130,7 @@ public class PostKarenGlitch : MonoBehaviour
         Blackout.color = new Color(0, 0, 0, 0f);
         DoDynamicIntensity = true;
         HOLDONTOME.Play();
-        
+        lmao.Magnitude = 1f;
     }
 
     public AudioClip JUSTASINGLEPULL;
@@ -138,7 +138,7 @@ public class PostKarenGlitch : MonoBehaviour
     {
         var Chance = Random.Range(1, 10);
         HOLDONTOME.Stop();
-        lmao.Magnitude = 3f;
+        lmao.Magnitude = 5f;
         HOLDONTOME.clip = JUSTASINGLEPULL;
         GlitchSound.Play();
         PlayerCam.CameraEnabled = false;
@@ -217,7 +217,7 @@ public class PostKarenGlitch : MonoBehaviour
             HOLDONTOME.volume = MappedValue;
             //MappedValue = variable to change intensity over rotation
             CA.intensity.value = MappedValue;
-            lmao.Magnitude = 0.3f + ((LookTimer * 2) - 0.3f);
+            lmao.Magnitude = MappedValue * 2;
             if (MappedValue >= 0.93f)
             {
                 if(LookTimer <= RequiredLookTime)
