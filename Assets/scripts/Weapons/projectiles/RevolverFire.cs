@@ -21,12 +21,12 @@ public class RevolverFire : MonoBehaviour
     public GameObject StartPos;
     public GameObject HitPos;
     private RevolverTrail TrailScript;
-
+    private ScoreSystem ScoreSystem;
     int LayerMasks;
 
     /* BUNDLE
-private ScoreSystem ScoreSystem;
-ScoreSystem = GameObject.FindWithTag("Score").GetComponent<ScoreSystem>();
+;
+
 ScoreSystem.AddScore(Random.Range(250, 300)); // ADDS SCORE
 ScoreSystem.NewKill(); // ON KILL
  */
@@ -38,6 +38,7 @@ ScoreSystem.NewKill(); // ON KILL
         int AllLayers = Physics.AllLayers;
         int LayerToExclude = LayerMask.GetMask("Trigger");
         LayerMasks = AllLayers & ~LayerToExclude;
+        ScoreSystem = GameObject.FindWithTag("Score").GetComponent<ScoreSystem>();
     }
     public void Fire()
     {
@@ -50,6 +51,8 @@ ScoreSystem.NewKill(); // ON KILL
             TrailScript.setTrail(Distance);
             if (hitenemy.collider.gameObject.layer == LayerMask.NameToLayer("Enemy"))
             {
+                float Score = Random.Range(100, 125);
+                ScoreSystem.AddScore(Score);
                 GameObject THEBLOOD = Instantiate(Blood);
                 THEBLOOD.GetComponent<bloodEmitter>().AttachToObject(hitenemy.collider.transform.position);
                 hitenemy.transform.gameObject.GetComponent<EnemyHealth>().health -= Damage;

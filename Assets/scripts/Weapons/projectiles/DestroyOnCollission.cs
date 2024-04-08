@@ -19,17 +19,12 @@ public class DestroyOnCollission : MonoBehaviour
     public bloodEmitter BloodParticles;
     private SphereCollider Collider;
     private bool CanCollide;
+    private ScoreSystem ScoreSystem;
 
     private int LayersToIgnore = Convert.ToInt32("11111111111111111101111111111111", 2); //LAYER 1 IS AT THE END!!!!
-
-    /* BUNDLE
-private ScoreSystem ScoreSystem;
-ScoreSystem = GameObject.FindWithTag("Score").GetComponent<ScoreSystem>();
-ScoreSystem.AddScore(Random.Range(250, 300)); // ADDS SCORE
-ScoreSystem.NewKill(); // ON KILL
- */
     private void Start()
     {
+        ScoreSystem = GameObject.FindWithTag("Score").GetComponent<ScoreSystem>();
         ExpireTimer = ExistTime;
         UseExpireTimer = true;
         CanCollide = true;
@@ -44,6 +39,8 @@ ScoreSystem.NewKill(); // ON KILL
         Collider.isTrigger = true;
         if (collision.gameObject.layer == LayerMask.NameToLayer("Enemy"))
         {
+            float Score = UnityEngine.Random.Range(10, 20);
+            ScoreSystem.AddScore(Score);
             GameObject THEBLOOD = Instantiate(Blood);
             THEBLOOD.GetComponent<bloodEmitter>().AttachToObject(collision.transform.position);
             collision.transform.parent.gameObject.GetComponent<EnemyHealth>().health -= Damage;

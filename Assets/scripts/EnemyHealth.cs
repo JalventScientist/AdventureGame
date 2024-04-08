@@ -18,8 +18,9 @@ public class EnemyHealth : MonoBehaviour
     {
         if (health <= 0)
         {
+            float Score = Random.Range(250, 300);
             MusicHandler.GetComponent<musicHandler>().EnemyCount -= 1f;
-            ScoreSystem.AddScore(Random.Range(250, 300));
+            ScoreSystem.AddScore(Score);
             ScoreSystem.NewKill();
             Object.Destroy(this.gameObject);
         }

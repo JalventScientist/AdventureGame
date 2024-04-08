@@ -1067,12 +1067,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41321d38a7767b94baf4764ca716701a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ScoreText: {fileID: 0}
-  ComboCounter: {fileID: 0}
+  ScoreText: {fileID: 4560376970194941020}
+  ComboCounter: {fileID: 3817935208911336479}
   Score: 0
   multiplier: 1
   ComboTime: 2
-  Decrement: 1
+  Decrement: 0.1
 --- !u!1 &4816156457424071349
 GameObject:
   m_ObjectHideFlags: 0

@@ -18,8 +18,9 @@ public class ScoreSystem : MonoBehaviour
 
     private void Update()
     {
-        ComboCounter.text = "Multiplier: x" + multiplier;
-        multiplier = Mathf.Round(multiplier * 10.0f) * 0.1f;
+        ComboCounter.text = "Multiplier: x" + Mathf.Round(multiplier * 100.0f) * 0.01f;
+        Score = Mathf.Round(Score);
+        ScoreText.text = "Score: " + Score;
         multiplier = Mathf.Clamp(multiplier,1, 3);
         if(ComboTimer > 0)
         {
@@ -30,10 +31,10 @@ public class ScoreSystem : MonoBehaviour
         }
         if(multiplier > 1)
         {
-            ComboCounter.gameObject.SetActive(true);
+            ComboCounter.color = new Color(1f, 0.984f, 0f, 1);
         } else
         {
-            ComboCounter.gameObject.SetActive(false);
+            ComboCounter.color = new Color(1f, 0.984f, 0f, 0);
         }
     }
 
@@ -44,7 +45,8 @@ public class ScoreSystem : MonoBehaviour
     }
     public void AddScore(float AddedScore)
     {
-        float FinalScore = AddedScore * multiplier; //Applies the score multiplier to the added score
+        float FinalScore = (AddedScore * multiplier) * 0.6f; //Applies the score multiplier to the added score
         Score += FinalScore;
+        ComboTimer = ComboTime;
     }
 }

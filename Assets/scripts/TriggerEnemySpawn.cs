@@ -58,7 +58,6 @@ public class TriggerEnemySpawn : MonoBehaviour
             Triggered = true;
         }
     }
-
     private void Update()
     {
         if (ArenaActive) {
