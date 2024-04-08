@@ -14,6 +14,7 @@ TagManager:
   - PlayerCollider
   - PlrMessageSystem
   - Glitch
+  - Score
   layers:
   - Default
   - TransparentFX

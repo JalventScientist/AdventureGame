@@ -22,6 +22,12 @@ public class DestroyOnCollission : MonoBehaviour
 
     private int LayersToIgnore = Convert.ToInt32("11111111111111111101111111111111", 2); //LAYER 1 IS AT THE END!!!!
 
+    /* BUNDLE
+private ScoreSystem ScoreSystem;
+ScoreSystem = GameObject.FindWithTag("Score").GetComponent<ScoreSystem>();
+ScoreSystem.AddScore(Random.Range(250, 300)); // ADDS SCORE
+ScoreSystem.NewKill(); // ON KILL
+ */
     private void Start()
     {
         ExpireTimer = ExistTime;

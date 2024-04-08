@@ -23,8 +23,13 @@ public class RevolverFire : MonoBehaviour
     private RevolverTrail TrailScript;
 
     int LayerMasks;
-    
 
+    /* BUNDLE
+private ScoreSystem ScoreSystem;
+ScoreSystem = GameObject.FindWithTag("Score").GetComponent<ScoreSystem>();
+ScoreSystem.AddScore(Random.Range(250, 300)); // ADDS SCORE
+ScoreSystem.NewKill(); // ON KILL
+ */
     private void Start()
     {
         orientation = GameObject.FindWithTag("PlrCam").GetComponent<Camera>();
