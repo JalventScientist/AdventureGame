@@ -54,6 +54,7 @@ public class LevelEnterScene : MonoBehaviour
         LandEffect.Play();
     }
     // Update is called once per frame
+    private bool Finished = false;
     void Update()
     {
        if (TriggerOrTimer)
@@ -74,11 +75,15 @@ public class LevelEnterScene : MonoBehaviour
             }
             else if (AnimationTimer <= 0)
             {
-                Player.SetActive(true);
-                PlayerAnimator.gameObject.SetActive(false);
-                CameraDisable.SetActive(false);
-                Crosshair.SetActive(true);
-                MenuHandler.CanPressMenu = true;
+                if(!Finished)
+                {
+                    Finished = true;
+                    Player.SetActive(true);
+                    PlayerAnimator.gameObject.SetActive(false);
+                    CameraDisable.SetActive(false);
+                    Crosshair.SetActive(true);
+                    MenuHandler.CanPressMenu = true;
+                }
                 
             }
             if(!hasShaken)

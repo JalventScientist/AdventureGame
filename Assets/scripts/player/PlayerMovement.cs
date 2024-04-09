@@ -166,9 +166,12 @@ public class PlayerMovement : MonoBehaviour
             }
             if (Input.GetKeyDown(sprintKey) && staminaLeft > 0)
             {
-                moveSpeed = sprintspeed;
-                isSprinting = true;
-                plrCam.DoFov(70, 0.9f);
+                if(hozInput != 0 || vertInput != 0)
+                {
+                    moveSpeed = sprintspeed;
+                    isSprinting = true;
+                    plrCam.DoFov(70, 0.9f);
+                }
             }
             if (Input.GetKeyUp(sprintKey) || staminaLeft <= 0)
             {

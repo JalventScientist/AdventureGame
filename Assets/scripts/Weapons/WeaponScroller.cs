@@ -21,6 +21,7 @@ public class WeaponScroller : MonoBehaviour
     public Vector3[] GunPositions;
     private KeyCode ActiveKey;
     private GameObject CurrentWeaponObject;
+    public bool ActuallyDoesStuff = true;
 
     private void Start()
     {
@@ -30,34 +31,37 @@ public class WeaponScroller : MonoBehaviour
 
     private void Update()
     {
-
-        if (WeaponChangeTimer > 0f)
+        if(ActuallyDoesStuff)
         {
-            WeaponChangeTimer -= Time.deltaTime;
-        }
-        else
-        {
-            if (Input.mouseScrollDelta.y > 0f) // forward
-            {
-                int NextWeapon = currentWeapon + 1;
-                if (NextWeapon > MaxWeapon)
-                {
-                    NextWeapon = 0;
-                }
-                ChangeWeapon(NextWeapon);
-            }
-            if (Input.mouseScrollDelta.y < 0f)
-            {
-                int NextWeapon = currentWeapon - 1;
-                if (NextWeapon < 0)
-                {
-                    NextWeapon = MaxWeapon;
-                }
-                ChangeWeapon(NextWeapon);
-            }
-        }
-        
 
+            if (WeaponChangeTimer > 0f)
+            {
+                WeaponChangeTimer -= Time.deltaTime;
+            }
+            else
+            {
+                if (Input.mouseScrollDelta.y > 0f) // forward
+                {
+                    int NextWeapon = currentWeapon + 1;
+                    if (NextWeapon > MaxWeapon)
+                    {
+                        NextWeapon = 0;
+                    }
+                    ChangeWeapon(NextWeapon);
+                }
+                if (Input.mouseScrollDelta.y < 0f)
+                {
+                    int NextWeapon = currentWeapon - 1;
+                    if (NextWeapon < 0)
+                    {
+                        NextWeapon = MaxWeapon;
+                    }
+                    ChangeWeapon(NextWeapon);
+                }
+            }
+
+
+        }
     }
 
     public void ChangeWeapon(int WeaponChoice)

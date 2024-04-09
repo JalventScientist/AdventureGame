@@ -10,6 +10,8 @@ public class LevelDoor : MonoBehaviour
     public BoxCollider DoorTrigger;
     public AudioSource DoorSound;
     public AudioClip[] DoorClips;
+    private LevelTimer timer;
+    private EndLevel LevelEndSystem;
 
     public musicHandler musicHandler;
 
@@ -18,6 +20,12 @@ public class LevelDoor : MonoBehaviour
     private bool Triggered = false;
 
     public bool TriggeredByCollission = true;
+
+    private void Start()
+    {
+        timer = GameObject.FindWithTag("LevelEnder").GetComponent<LevelTimer>();
+        LevelEndSystem = GameObject.FindWithTag("what").GetComponent<EndLevel>();
+    }
     public void OpenDoor()
     {
         Triggered = true;
@@ -37,7 +45,9 @@ public class LevelDoor : MonoBehaviour
         DoorSound.Play();
         musicHandler.MusicStarted = true;
         musicHandler.SpontaneousStart();
-        if(TriggeredByCollission)
+        timer.TimerActive = true;
+        LevelEndSystem.SetScoreSystem();
+        if (TriggeredByCollission)
         {
             LevelChunk.SetActive(true);
         }

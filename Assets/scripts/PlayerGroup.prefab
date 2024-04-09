@@ -1534,6 +1534,7 @@ MonoBehaviour:
   GunPositions:
   - {x: 0.368, y: -0.545, z: 0.564}
   - {x: 0.174, y: -0.709, z: 0.358}
+  ActuallyDoesStuff: 1
 --- !u!1 &7589065495915044555
 GameObject:
   m_ObjectHideFlags: 0
@@ -1797,11 +1798,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2509164830885904, guid: 87ba48600730f03458dffe3fd0454e0b, type: 3}
       propertyPath: sensX
-      value: 200
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 2509164830885904, guid: 87ba48600730f03458dffe3fd0454e0b, type: 3}
       propertyPath: sensY
-      value: 200
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 2509164830885904, guid: 87ba48600730f03458dffe3fd0454e0b, type: 3}
       propertyPath: UICamera

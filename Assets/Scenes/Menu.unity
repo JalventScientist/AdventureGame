@@ -2703,14 +2703,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa05afc62313df24b89200e305110602, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Stage0: 0000000000
+  Stage0: 0100000000
   FirsttimePlaying: 1
   Stage1: 0000000000
   SecretLevel1: 0
   Stage2: 0000000000
   SecretLevel2: 0
   CurrentStage: 0
-  CurrentLevel: 1
+  CurrentLevel: 0
 --- !u!4 &901715887
 Transform:
   m_ObjectHideFlags: 0

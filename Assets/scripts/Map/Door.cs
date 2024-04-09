@@ -101,7 +101,6 @@ public class Door : MonoBehaviour
 
     public void TriggerArena(bool toggle)
     {
-        print("Called Arena with " + toggle);
         if (toggle)
         {
             ArenaAnimator.Play("Arena");

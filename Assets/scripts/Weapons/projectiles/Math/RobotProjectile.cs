@@ -38,7 +38,6 @@ public class RobotProjectile : MonoBehaviour
 
             if (sampleTime >= 1f)
             {
-                Debug.Log("Death.mp3");
                 Destroy(gameObject);
             }
         } else

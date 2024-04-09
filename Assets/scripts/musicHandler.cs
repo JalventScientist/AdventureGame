@@ -56,7 +56,7 @@ public class musicHandler : MonoBehaviour
 
 
     }
-
+    bool CanRestart = true;
     private void Update()
     {
         if(!FreezeState)
@@ -203,8 +203,12 @@ public class musicHandler : MonoBehaviour
         }
     }
 
-    public void SetGlobalVolume(float volume)
+    public void SetGlobalVolume(float volume, bool EndPermanently = false)
     {
+        if (EndPermanently)
+            CanRestart = false;
+        else
+            CanRestart = true;
         for (int i = 0; i < Sources.Length; i++)
         {
             if (!Sources[i].mute)
