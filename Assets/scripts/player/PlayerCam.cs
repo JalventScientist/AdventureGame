@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -16,6 +17,8 @@ public class PlayerCam : MonoBehaviour
 
     float xRotation;
     float yRotation;
+    private float mouseX;
+    private float mouseY;
 
     private void Start()
     {
@@ -27,15 +30,22 @@ public class PlayerCam : MonoBehaviour
     {
        if(CameraEnabled)
         {
-            float mouseX = Input.GetAxisRaw("Mouse X") * Time.deltaTime * sensX;
-            float mouseY = Input.GetAxisRaw("Mouse Y") * Time.deltaTime * sensY;
-
             yRotation += mouseX;
             xRotation -= mouseY;
             xRotation = Mathf.Clamp(xRotation, -90f, 90f);
 
             camHolder.rotation = Quaternion.Euler(xRotation, yRotation, 0);
             orientation.rotation = Quaternion.Euler(0, yRotation, 0);
+        }
+    }
+    
+
+    private void FixedUpdate()
+    {
+        if (CameraEnabled)
+        {
+            mouseX = Input.GetAxisRaw("Mouse X") * sensX;
+            mouseY = Input.GetAxisRaw("Mouse Y") * sensY;
         }
     }
 
