@@ -13,6 +13,7 @@ public class EndLevel : MonoBehaviour
     private LevelTimer Timer;
     private musicHandler musicHandler;
     public PauseGame PauseGame;
+    private PlayerCam playerCam;
 
     [Header("References")]
     public RawImage UIFade;
@@ -34,6 +35,7 @@ public class EndLevel : MonoBehaviour
     {
         Timer = GameObject.FindWithTag("LevelEnder").GetComponent<LevelTimer>();
         musicHandler = GameObject.FindWithTag("musichandler").GetComponent<musicHandler>();
+        playerCam = GameObject.FindWithTag("PlrCam").GetComponent<PlayerCam>();
         
     }
 
@@ -72,7 +74,7 @@ public class EndLevel : MonoBehaviour
 
     IEnumerator EndLeLevel()
     {
-        print("Called");
+        playerCam.CameraEnabled = false;
         PauseGame.CanPressMenu = false;
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.Confined;

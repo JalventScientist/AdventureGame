@@ -11,6 +11,7 @@ public class PlayerCam : MonoBehaviour
 
     public Transform orientation;
     public Transform camHolder;
+    private PauseGame GamePause;
 
     public Camera UICamera;
 
@@ -21,14 +22,15 @@ public class PlayerCam : MonoBehaviour
     {
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+        GamePause = GameObject.FindWithTag("Menu").GetComponent<PauseGame>();
     }
 
     private void Update()
     {
-       if(CameraEnabled)
+       if(CameraEnabled && !GamePause.MenuIsActive)
         {
-            float mouseX = Input.GetAxisRaw("Mouse X") * Time.deltaTime * sensX;
-            float mouseY = Input.GetAxisRaw("Mouse Y") * Time.deltaTime * sensY;
+            float mouseX = Input.GetAxisRaw("Mouse X")  * sensX;
+            float mouseY = Input.GetAxisRaw("Mouse Y")  * sensY;
 
             yRotation += mouseX;
             xRotation -= mouseY;

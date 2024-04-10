@@ -17,6 +17,7 @@ TagManager:
   - Score
   - LevelEnder
   - what
+  - Menu
   layers:
   - Default
   - TransparentFX

@@ -22,7 +22,7 @@ public class PauseGame : MonoBehaviour
     public float lastCheckPoint = 0; // CheckPoint 0 = Start of level
 
     private bool HasPressedMenu = false;
-    private bool MenuIsActive = false;
+    public bool MenuIsActive = false;
     public bool UIPressedContinue = false;
 
     private void Update()

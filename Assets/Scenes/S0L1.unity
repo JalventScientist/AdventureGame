@@ -6788,7 +6788,7 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -36769,8 +36769,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d94a1aa2241c19e4b93747a61b66630f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sensX: 50
-  sensY: 50
+  sensX: 1
+  sensY: 1
   CameraEnabled: 1
   orientation: {fileID: 1274769373}
   camHolder: {fileID: 401740401}
@@ -38019,6 +38019,10 @@ PrefabInstance:
     - target: {fileID: 1166955705611489092, guid: 5c66f511a77a1884f85cfc50dd2a0b6e, type: 3}
       propertyPath: m_Name
       value: MenuHandler
+      objectReference: {fileID: 0}
+    - target: {fileID: 1166955705611489092, guid: 5c66f511a77a1884f85cfc50dd2a0b6e, type: 3}
+      propertyPath: m_TagString
+      value: Menu
       objectReference: {fileID: 0}
     - target: {fileID: 3932679201987513349, guid: 5c66f511a77a1884f85cfc50dd2a0b6e, type: 3}
       propertyPath: m_LocalPosition.x
