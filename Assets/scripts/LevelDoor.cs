@@ -47,6 +47,7 @@ public class LevelDoor : MonoBehaviour
         musicHandler.SpontaneousStart();
         timer.TimerActive = true;
         LevelEndSystem.SetScoreSystem();
+        LevelEndSystem.GetCamera();
         if (TriggeredByCollission)
         {
             LevelChunk.SetActive(true);

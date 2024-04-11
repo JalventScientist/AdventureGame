@@ -29,14 +29,43 @@ public class FilthBehaviour : MonoBehaviour
     public float SpeedModifier = 1f;
     public float AttackDamage;
 
+    [Header("Audio")]
+    public AudioClip[] IdleSounds;
+    public AudioClip[] AttackSounds;
+    private AudioSource SoundSource;
+
     // Unused Variables my beloved
 
     private void Start()
     {
+        SoundSource = GetComponent<AudioSource>();
         Player = GameObject.FindWithTag("Player");
         PlayerHealth = Player.GetComponent<Health>();
         FilthAnimator = FilthPrefab.GetComponent<Animator>();
         PlayerMovement = Player.GetComponent<PlayerMovement>();
+        for(int i = 0; i < IdleSounds.Length; i++)
+        {
+            IdleSounds[i].LoadAudioData();
+        }
+        for (int i = 0; i < AttackSounds.Length; i++)
+        {
+            AttackSounds[i].LoadAudioData();
+        }
+        StartCoroutine(Grunting());
+    }
+
+    IEnumerator Grunting()
+    {
+        while (true)
+        {
+            float RandomWaitTime = Random.Range(2.001f, 5.001f);
+            yield return new WaitForSeconds(RandomWaitTime);
+            if (!attacking)
+            {
+                SoundSource.clip = IdleSounds[Random.Range(0,IdleSounds.Length)];
+                SoundSource.Play();
+            }
+        }
     }
 
     private void Update()
@@ -94,6 +123,8 @@ public class FilthBehaviour : MonoBehaviour
                         HasAttacked = true;
                         if (Distance <= MinimumDistance)
                         {
+                            SoundSource.clip = AttackSounds[Random.Range(0, AttackSounds.Length)];
+                            SoundSource.Play();
                             PlayerMovement.Push(transform.forward, 10f);
                             PlayerHealth.DamagePlayer(AttackDamage);
                         }

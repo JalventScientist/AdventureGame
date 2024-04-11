@@ -29,14 +29,21 @@ public class EndLevel : MonoBehaviour
     public GameObject MenuButton;
     public TMP_Text MenuText;
 
+    public string NextLevelTGT;
+
     public bool Triggered = false;
 
     private void Start()
     {
         Timer = GameObject.FindWithTag("LevelEnder").GetComponent<LevelTimer>();
         musicHandler = GameObject.FindWithTag("musichandler").GetComponent<musicHandler>();
-        playerCam = GameObject.FindWithTag("PlrCam").GetComponent<PlayerCam>();
         
+        
+    }
+
+    public void GetCamera()
+    {
+        playerCam = GameObject.FindWithTag("PlrCam").GetComponent<PlayerCam>();
     }
 
 
@@ -138,7 +145,7 @@ public class EndLevel : MonoBehaviour
     }
     public void NextLevel()
     {
-
+        SceneManager.LoadScene(NextLevelTGT);
     }
     public void ToMenu()
     {

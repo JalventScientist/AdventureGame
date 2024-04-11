@@ -6772,6 +6772,7 @@ MonoBehaviour:
   RestartLevelText: {fileID: 551168259}
   MenuButton: {fileID: 644998272}
   MenuText: {fileID: 1861597212}
+  NextLevelTGT: LockedContent
   Triggered: 0
 --- !u!65 &160332158
 BoxCollider:
