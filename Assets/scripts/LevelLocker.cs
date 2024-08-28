@@ -7,7 +7,11 @@ public class LevelLocker : MonoBehaviour
 {
     public void OpenItch()
     {
-        Application.OpenURL("https://jalvent.itch.io/terminus");
+        Application.OpenURL("https://discord.gg/GbCB9PkJKF");
+    }
+    public void OpenTwitter()
+    {
+        Application.OpenURL("https://twitter.com/j_scientist1");
     }
 
     public void BackToMenu()
